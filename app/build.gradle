@@ -9,8 +9,7 @@ apply from: rootProject.file("buildsystem/output.gradle")
 // Global configuration
 def final cfg = extensions.getByName("ext")
 // Overrides minSdk to >21
-def final minSdk = project.hasProperty("fastLocalBuild") && project.property("fastLocalBuild").asBoolean() ? 21 :
-    cfg.getAt("androidMinSdkVersion")
+def final minSdk = project.hasProperty("fastLocalBuild") ? 21 : cfg.getAt("androidMinSdkVersion")
 
 android {
 
@@ -122,6 +121,7 @@ dependencies {
   compile dpn.supportCardView
   compile dpn.supportPercent
   compile dpn.supportPreference
+  compile dpn.supportMultidex
 
   compile dpn.kotlinStdLib
   compile dpn.kotlinReflect
