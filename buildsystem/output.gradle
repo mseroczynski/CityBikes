@@ -1,0 +1,17 @@
+android {
+
+  def apkDir = "apks"
+  applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+      def original = output.outputFile
+      def originalName = original.name.replaceFirst(~/\.[^\.]+$/, '')
+
+      def newDestination = "${apkDir}/${variant.versionCode}-${variant.versionName}-${originalName}.apk"
+
+      println "[BUILD_LOG]: Prepared path for [${variant.name}]: ${newDestination}"
+
+      output.outputFile = file(newDestination)
+    }
+  }
+
+}

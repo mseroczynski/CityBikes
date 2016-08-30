@@ -1,26 +1,186 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.getkeepsafe.dexcount' // Dexcount
+
+apply from: rootProject.file("buildsystem/dependencies.gradle")
+apply from: rootProject.file("buildsystem/output.gradle")
+
+// Global configuration
+def final cfg = extensions.getByName("ext")
+// Overrides minSdk to >21
+def final minSdk = project.hasProperty("fastLocalBuild") && project.property("fastLocalBuild").asBoolean() ? 21 :
+    cfg.getAt("androidMinSdkVersion")
 
 android {
-  compileSdkVersion 24
-  buildToolsVersion "24.0.1"
+
+  compileSdkVersion cfg.getAt("androidCompileSdkVersion")
+  buildToolsVersion cfg.getAt("androidBuildToolsVersion")
 
   defaultConfig {
-    applicationId "pl.ches.citybikes"
-    minSdkVersion 16
-    targetSdkVersion 24
-    versionCode 1
-    versionName "1.0"
+    minSdkVersion minSdk
+    targetSdkVersion cfg.getAt("androidTargetSdkVersion")
+
+    applicationId cfg.getAt("androidApplicationId")
+    versionCode cfg.getAt("androidVersionCode")
+    versionName cfg.getAt("androidVersionName")
+    testInstrumentationRunner cfg.getAt("testInstrumentationRunner")
+
+    multiDexEnabled true
   }
-  buildTypes {
+
+  sourceSets {
+    main {
+      java.srcDirs += 'src/main/kotlin'
+    }
+
+    debug {
+      java.srcDirs += 'src/debug/kotlin'
+      manifest.srcFile 'src/debug/manifests/AndroidManifest.xml'
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_7
+    targetCompatibility JavaVersion.VERSION_1_7
+  }
+
+  dexOptions {
+    // To prevent http://stackoverflow.com/questions/25013638/android-studio-google-jar-causing-gc-overhead-limit-exceeded-error
+    incremental true
+    javaMaxHeapSize "4g"
+  }
+
+  packagingOptions {
+    exclude 'LICENSE.txt'
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/ASL2.0'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+    // Exclude the Processor that is already packaged
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
+  }
+
+  testOptions {
+    unitTests.returnDefaultValues = true
+  }
+
+  signingConfigs {
+    debug {
+      storeFile rootProject.file("buildsystem/debug.keystore")
+      storePassword 'android'
+      keyAlias 'androiddebugkey'
+      keyPassword 'android'
+    }
     release {
+      storeFile rootProject.file("buildsystem/debug.keystore")
+      storePassword 'android'
+      keyAlias 'androiddebugkey'
+      keyPassword 'android'
+    }
+  }
+
+  buildTypes {
+    debug {
+      signingConfig signingConfigs.debug
+      applicationIdSuffix '.debug'
+
       minifyEnabled false
+    }
+    release {
+      signingConfig signingConfigs.release
+
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      minifyEnabled true
     }
   }
 }
 
+// Kotlin
+buildscript {
+  repositories repos
+
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver.kotlin"
+  }
+}
+
+// DBFlow
+kapt {
+  generateStubs = true
+}
+
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  testCompile 'junit:junit:4.12'
-  compile 'com.android.support:appcompat-v7:24.2.0'
+  def dpn = cfg.dependencies
+  def testDpn = cfg.testDependencies
+  def debugDpn = cfg.debugDependencies
+
+  compile dpn.supportAppCompat
+  compile dpn.supportAnnotations
+  compile dpn.supportDesign
+  compile dpn.supportPalette
+  compile dpn.supportCardView
+  compile dpn.supportPercent
+  compile dpn.supportPreference
+
+  compile dpn.kotlinStdLib
+  compile dpn.kotlinReflect
+
+  compile dpn.dagger2
+  kapt dpn.dagger2Compiler
+  provided dpn.daggerJavaxAnnotation
+
+  compile dpn.rxKotlin
+  compile dpn.rxAndroid
+  compile dpn.rxJavaProguardRules
+  compile dpn.rxBindingKotlin
+  compile dpn.rxBindingDesignKotlin
+  compile dpn.rxBindingSupportV4Kotlin
+  compile dpn.rxNetwork
+  compile dpn.rxRelay
+
+  kapt dpn.dbFlowProcessor
+  compile dpn.dbFlowCore
+  compile dpn.dbFlow
+  compile dpn.dbFlowKotlinExt
+
+  compile dpn.transformer
+  provided dpn.transformerCompiler
+  kapt dpn.transformerCompiler
+
+  compile(dpn.retrofit2) {
+    exclude module: 'okhttp'
+  }
+  compile dpn.retrofit2RxJava
+  compile dpn.retrofit2Gson
+  compile dpn.okhttp3
+
+  compile dpn.timber
+
+  compile dpn.mosby
+  compile dpn.mosbyViewstate
+
+  compile dpn.materialTypeface
+  compile dpn.materialishProgress
+  compile dpn.calligraphy
+
+  // Unit tests
+  testCompile testDpn.jUnit
+  testCompile testDpn.mockitoCore
+  testCompile testDpn.robolectric
+  testCompile testDpn.robolectricMultidex
+
+  testCompile testDpn.powerMockJunit4
+  testCompile testDpn.powerMockJunit4Rule
+  testCompile testDpn.powerMockApiMockito
+  testCompile testDpn.powerMockClassloadingXstream
+
+  kaptTest testDpn.dagger2Compiler
+
+  // Debug libs
+  debugCompile debugDpn.stetho
+  debugCompile debugDpn.stethoOkHttp3
+  debugCompile debugDpn.leakCanary
+  debugCompile debugDpn.okhttp3LogInterceptor
+
 }

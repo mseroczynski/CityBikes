@@ -1,0 +1,139 @@
+allprojects {
+  repositories repos
+}
+
+ext {
+  //Android
+  androidBuildToolsVersion = '24.0.2'
+  androidMinSdkVersion = 16
+  androidTargetSdkVersion = 24
+  androidCompileSdkVersion = 24
+
+  androidApplicationId = 'pl.ches.citybikes'
+  androidVersionCode = 132
+  androidVersionName = '0.9.0'
+  testInstrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
+
+  //Libs
+  supportLibsVersion = '24.1.1'
+  daggerVersion = '2.6.1'
+  fabricVersion = '2.5.2'
+  okhttpVersion = '3.4.1'
+
+  dbFlowVersion = '3.1.1'
+
+  transformerVersion = '1.2'
+
+  rxKotlinVersion = '0.55.0'
+  rxAndroidVersion = '1.1.0'
+  rxBindingVersion = '0.4.0'
+  rxNetworkVersion = '0.4.0'
+  rxRelayVersion = '1.1.0'
+  rxJavaProguardRulesVersion = '1.1.9.0'
+  retrofitVersion = '2.0.2'
+  timberVersion = '4.1.1'
+  mosbyVersion = '2.0.1'
+
+  // Test libs
+  jUnitVersion = '4.12'
+  mockitoCoreVersion = '1.10.19'
+  robolectricVersion = '3.0'
+  powerMockVersion = '1.6.5'
+
+  // Debug libs
+  stethoVersion = '1.3.1'
+  leakCanaryVersion = '1.3.1'
+
+  // Ui tests libs
+  testRunnerVersion = '0.5'
+  espressoVersion = '2.2.2'
+  hamcrestVersion = '1.3'
+
+  dependencies = [
+
+      supportAppCompat        : "com.android.support:appcompat-v7:${supportLibsVersion}",
+      supportAnnotations      : "com.android.support:support-annotations:${supportLibsVersion}",
+      supportDesign           : "com.android.support:design:${supportLibsVersion}",
+      supportPalette          : "com.android.support:palette-v7:${supportLibsVersion}",
+      supportCardView         : "com.android.support:cardview-v7:${supportLibsVersion}",
+      supportPercent          : "com.android.support:percent:${supportLibsVersion}",
+      supportPreference       : "com.android.support:preference-v14:${supportLibsVersion}",
+
+      kotlinStdLib            : "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin",
+      kotlinReflect           : "org.jetbrains.kotlin:kotlin-reflect:$ver.kotlin",
+
+      dagger2Compiler         : "com.google.dagger:dagger-compiler:${daggerVersion}",
+      daggerJsr250            : "javax.annotation:jsr250-api:1.0",
+      daggerJavaxAnnotation   : "org.glassfish:javax.annotation:10.0-b28",
+      dagger2                 : "com.google.dagger:dagger:${daggerVersion}",
+
+      rxKotlin                : "io.reactivex:rxkotlin:${rxKotlinVersion}",
+      rxAndroid               : "io.reactivex:rxandroid:${rxAndroidVersion}",
+      rxJavaProguardRules     : "com.artemzin.rxjava:proguard-rules:${rxJavaProguardRulesVersion}",
+      rxBindingKotlin         : "com.jakewharton.rxbinding:rxbinding-kotlin:${rxBindingVersion}",
+      rxBindingDesignKotlin   : "com.jakewharton.rxbinding:rxbinding-design-kotlin:${rxBindingVersion}",
+      rxBindingSupportV4Kotlin: "com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:${rxBindingVersion}",
+      rxNetwork               : "com.github.pwittchen:reactivenetwork:${rxNetworkVersion}",
+      rxRelay                 : "com.jakewharton.rxrelay:rxrelay:${rxRelayVersion}",
+
+      dbFlowProcessor         : "com.github.Raizlabs.DBFlow:dbflow-processor:${dbFlowVersion}",
+      dbFlowCore              : "com.github.Raizlabs.DBFlow:dbflow-core:${dbFlowVersion}",
+      dbFlow                  : "com.github.Raizlabs.DBFlow:dbflow:${dbFlowVersion}",
+      dbFlowKotlinExt         : "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbFlowVersion}",
+
+      transformer             : "com.mobandme:android-transformer:${transformerVersion}",
+      transformerCompiler     : "com.mobandme:android-transformer-compiler:${transformerVersion}",
+
+      retrofit2               : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+      retrofit2RxJava         : "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}",
+      retrofit2Gson           : "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+      okhttp3                 : "com.squareup.okhttp3:okhttp:${okhttpVersion}",
+
+      timber                  : "com.jakewharton.timber:timber:${timberVersion}",
+
+      mosby                   : "com.hannesdorfmann.mosby:mvp:${mosbyVersion}",
+      mosbyViewstate          : "com.hannesdorfmann.mosby:viewstate:${mosbyVersion}",
+
+      materialTypeface        : "com.mikepenz:google-material-typeface:2.2.0.1@aar",
+      materialishProgress     : "com.pnikosis:materialish-progress:1.7",
+      calligraphy             : "uk.co.chrisjenx:calligraphy:2.1.0",
+
+  ]
+
+  androidTestDependencies = [
+
+      testRunner     : "com.android.support.test:runner:${testRunnerVersion}",
+      testRules      : "com.android.support.test:rules:${testRunnerVersion}",
+      espressoCore   : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+      espressoContrib: "com.android.support.test.espresso:espresso-contrib:${espressoVersion}",
+      espressoIntents: "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
+      hamcrest       : "org.hamcrest:hamcrest-all:${hamcrestVersion}"
+
+  ]
+
+  testDependencies = [
+
+      jUnit                       : "junit:junit:${jUnitVersion}",
+      mockitoCore                 : "org.robolectric:robolectric:${mockitoCoreVersion}",
+      robolectric                 : "org.robolectric:robolectric:${robolectricVersion}",
+      robolectricMultidex         : "org.robolectric:shadows-multidex:${robolectricVersion}",
+
+      powerMockJunit4             : "org.powermock:powermock-module-junit4:${powerMockVersion}",
+      powerMockJunit4Rule         : "org.powermock:powermock-module-junit4-rule:${powerMockVersion}",
+      powerMockApiMockito         : "org.powermock:powermock-api-mockito:${powerMockVersion}",
+      powerMockClassloadingXstream: "org.powermock:powermock-classloading-xstream:${powerMockVersion}",
+
+      mockWebServer               : "com.squareup.okhttp3:mockwebserver:${okhttpVersion}",
+      dagger2Compiler             : "com.google.dagger:dagger-compiler:${daggerVersion}",
+
+  ]
+
+  debugDependencies = [
+
+      stetho               : "com.facebook.stetho:stetho:${stethoVersion}",
+      stethoOkHttp3        : "com.facebook.stetho:stetho-okhttp3:${stethoVersion}",
+      leakCanary           : "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+      okhttp3LogInterceptor: "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
+
+  ]
+}
