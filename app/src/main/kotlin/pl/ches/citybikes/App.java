@@ -24,6 +24,7 @@ public class App extends MultiDexApplication {
 
   protected void init() {
     AppInitializer.initVectorDrawables();
+    AppInitializer.initCalligraphy();
 
     appComponent = initAppComponent();
     appComponent.inject(this);

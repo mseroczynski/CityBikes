@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--Text-->
+  <item name="body_1_spacing" format="float" type="dimen">1.22448979592</item>
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--Base Material Typography Start-->
+  <style name="TextDisplay1" parent="TextAppearance.AppCompat.Display1">
+    <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+  </style>
+
+  <style name="TextDisplay2" parent="TextAppearance.AppCompat.Display2">
+    <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+  </style>
+
+  <style name="TextDisplay3" parent="TextAppearance.AppCompat.Display3">
+    <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+  </style>
+
+  <style name="TextDisplay4" parent="TextAppearance.AppCompat.Display4">
+    <item name="fontPath">fonts/Roboto-Light.ttf</item>
+  </style>
+
+  <style name="TextHeadline" parent="TextAppearance.AppCompat.Headline">
+    <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+  </style>
+
+  <style name="TextTitle" parent="TextAppearance.AppCompat.Title">
+    <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+  </style>
+
+  <style name="TextSubhead" parent="TextAppearance.AppCompat.Subhead">
+    <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+  </style>
+
+  <style name="TextBody2" parent="TextAppearance.AppCompat.Body2">
+    <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+    <item name="android:textSize">14sp</item>
+
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:lineSpacingMultiplier">@dimen/body_1_spacing</item>
+  </style>
+
+  <style name="TextBody1" parent="TextAppearance.AppCompat.Body1">
+    <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    <item name="android:textSize">14sp</item>
+
+    <item name="android:textColor">?android:textColorSecondary</item>
+    <item name="android:lineSpacingMultiplier">@dimen/body_1_spacing</item>
+  </style>
+
+  <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
+    <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+  </style>
+
+  <style name="TextMenu" parent="TextAppearance.AppCompat.Menu"/>
+
+  <style name="TextButton" parent="TextAppearance.AppCompat.Button">
+    <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+  </style>
+
+  <style name="TextButtonAllCaps" parent="TextButton">
+    <item name="android:textAllCaps">true</item>
+  </style>
+  <!--Base Material Typography End-->
+</resources>
