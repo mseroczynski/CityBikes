@@ -16,4 +16,5 @@ class AndroidSchedulerTransformer<T> : SchedulerTransformer<T> {
   override fun call(observable: Observable<T>): Observable<T> {
     return observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
   }
+
 }

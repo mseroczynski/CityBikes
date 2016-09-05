@@ -2,9 +2,11 @@ package pl.ches.citybikes.di.component;
 
 import android.content.Context;
 import dagger.Component;
-import org.jetbrains.annotations.NotNull;
 import pl.ches.citybikes.App;
 import pl.ches.citybikes.di.module.AndroidModule;
+import pl.ches.citybikes.di.module.BuildTypedModule;
+import pl.ches.citybikes.di.module.CityBikesApiModule;
+import pl.ches.citybikes.di.module.CommonModule;
 import pl.ches.citybikes.di.scope.AppScope;
 import pl.ches.citybikes.mvp.screen.main.MainComponent;
 
@@ -14,6 +16,9 @@ import pl.ches.citybikes.mvp.screen.main.MainComponent;
 @AppScope
 @Component(modules = {
     AndroidModule.class,
+    BuildTypedModule.class,
+    CityBikesApiModule.class,
+    CommonModule.class
 })
 public interface AppComponent {
 

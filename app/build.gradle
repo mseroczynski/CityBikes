@@ -138,6 +138,7 @@ dependencies {
   compile dpn.rxBindingSupportV4Kotlin
   compile dpn.rxNetwork
   compile dpn.rxRelay
+  compile dpn.reactiveLocation
 
   kapt dpn.dbFlowProcessor
   compile dpn.dbFlowCore
@@ -155,10 +156,9 @@ dependencies {
   compile dpn.retrofit2Gson
   compile dpn.okhttp3
 
-  compile dpn.timber
-
   compile dpn.mosby
   compile dpn.mosbyViewstate
+  compile dpn.timber
 
   compile dpn.materialTypeface
   compile dpn.materialishProgress
