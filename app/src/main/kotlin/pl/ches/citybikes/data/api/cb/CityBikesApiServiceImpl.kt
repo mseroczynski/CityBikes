@@ -41,7 +41,6 @@ constructor(private val cityBikesApi: CityBikesApi) : CityBikesApiService {
               freeBikes = "${it.freeBikes}"
           )
         }
-
       }
 
   companion object {

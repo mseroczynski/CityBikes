@@ -1,13 +1,11 @@
 package pl.ches.citybikes.mvp.screen.main
 
-import pl.ches.citybikes.data.api.cb.CityBikesApiService
-import pl.ches.citybikes.data.disk.entity.Area
-import pl.ches.citybikes.data.disk.entity.Station
+import pl.ches.citybikes.interactor.GetAreasInteractor
+import pl.ches.citybikes.interactor.GetAreasResult
+import pl.ches.citybikes.interactor.GetAreasResultType
 import pl.ches.citybikes.mvp.common.base.host.HostPresenter
-import rx.Observable
-import rx.functions.FuncN
+import rx.functions.Action1
 import v
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -15,33 +13,19 @@ import javax.inject.Inject
  */
 class MainPresenter
 @Inject
-constructor(private val cityBikesApiService: CityBikesApiService) : HostPresenter<MainView>() {
+constructor(private val getAreasInteractor: GetAreasInteractor) : HostPresenter<MainView>() {
 
   override fun attachView(view: MainView?) {
     super.attachView(view)
+    getAreasInteractor.execute(getAreasNextAction(), Unit)
     // TODO under development
-//    cityBikesApiService.getAreas()
-//        .compose(applyScheduler<List<Area>>())
-//        .subscribe({
-//          val observables = ArrayList<Observable<*>>()
-//
-//          it.forEach {
-//            observables.add(    cityBikesApiService.getStations(it.id)
-//                .compose(applyScheduler<List<Station>>()))
-//          }
-//
-//          Observable.zip(observables, {})
-//              .subscribe {
-//                v { "$it" }
-//
-//              }
-//
-//          v { "$it" }
-//        },{
-//          v { "$it" }
-//        },{
-//          v { "" }
-//        })
+  }
+
+  private fun getAreasNextAction(): Action1<GetAreasResult> = Action1() {
+    when (it.type) {
+      GetAreasResultType.SUCCESS -> v { "" }
+      GetAreasResultType.ERROR -> v { "" }
+    }
   }
 
 }

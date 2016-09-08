@@ -123,6 +123,8 @@ dependencies {
   compile dpn.supportPreference
   compile dpn.supportMultidex
 
+  compile dpn.playServicesLocation
+
   compile dpn.kotlinStdLib
   compile dpn.kotlinReflect
 
@@ -155,7 +157,6 @@ dependencies {
   compile dpn.retrofit2RxJava
   compile dpn.retrofit2Gson
   compile dpn.okhttp3
-
   compile dpn.mosby
   compile dpn.mosbyViewstate
   compile dpn.timber

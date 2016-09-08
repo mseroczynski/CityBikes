@@ -17,6 +17,7 @@ ext {
   //Libs
   supportLibsVersion = '24.1.1'
   multidexVersion = '1.0.1'
+  playServicesVersion = '8.4.0'
   daggerVersion = '2.6.1'
   fabricVersion = '2.5.2'
   okhttpVersion = '3.4.1'
@@ -61,6 +62,8 @@ ext {
       supportPercent          : "com.android.support:percent:${supportLibsVersion}",
       supportPreference       : "com.android.support:preference-v14:${supportLibsVersion}",
       supportMultidex         : "com.android.support:multidex:${multidexVersion}",
+
+      playServicesLocation    : "com.google.android.gms:play-services-location:${playServicesVersion}",
 
       kotlinStdLib            : "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin",
       kotlinReflect           : "org.jetbrains.kotlin:kotlin-reflect:$ver.kotlin",

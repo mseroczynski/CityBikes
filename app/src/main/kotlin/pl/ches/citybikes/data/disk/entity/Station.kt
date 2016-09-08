@@ -19,7 +19,7 @@ constructor(
     var id: String = "",
 
     @Column(name = Station.SOURCE_API)
-    var sourceApi: SourceApi = SourceApi.UNKNOWN,
+    var sourceApi: SourceApi = SourceApi.ANY,
 
     @Column(name = Station.ORIGINAL_ID)
     var originalId: String = "",
