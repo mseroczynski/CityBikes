@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-data class ApiCbNetwork(
+class ApiCbNetwork(
 
     @SerializedName("href")
     var href: String,

@@ -1,10 +1,10 @@
 package pl.ches.citybikes.di.module
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import d
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import pl.ches.citybikes.common.DevHelper
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -18,7 +18,7 @@ class BuildDebugModule : BuildTypedModule() {
     // Logging interceptor
     if (DevHelper.RETROFIT_LOGS) {
       val httpLoggingInterceptor = HttpLoggingInterceptor(
-          HttpLoggingInterceptor.Logger { message -> Timber.d(message) })
+          HttpLoggingInterceptor.Logger { message -> d { "$message" } })
       httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
       debugInterceptors.add(httpLoggingInterceptor)
     }

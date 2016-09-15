@@ -17,4 +17,8 @@ interface CityBikesApi {
   @GET("${CityBikesApiConsts.Endpoint.NETWORKS}/{networkId}")
   fun getNetwork(@Path("networkId", encoded = true) networkId: String): Observable<ApiCbNetworkResponse>
 
+  companion object {
+    const val FOR = "CityBikesApi"
+  }
+
 }

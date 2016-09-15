@@ -5,15 +5,15 @@ import rx.Observable
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-abstract class DataStore<K, V> {
+interface DataStore<K, V> {
 
-  abstract fun put(value: V)
+  fun put(value: V)
 
-  abstract fun get(key: K): V?
+  fun get(key: K): V?
 
-  abstract fun delete(value: V)
+  fun delete(value: V)
 
-  abstract fun clear()
+  fun clear()
 
   fun remove(key: K) {
     val entry = get(key)

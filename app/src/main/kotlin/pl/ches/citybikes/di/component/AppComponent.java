@@ -7,7 +7,9 @@ import pl.ches.citybikes.di.module.AndroidModule;
 import pl.ches.citybikes.di.module.BuildTypedModule;
 import pl.ches.citybikes.di.module.CityBikesApiModule;
 import pl.ches.citybikes.di.module.CommonModule;
+import pl.ches.citybikes.di.module.DiskModule;
 import pl.ches.citybikes.di.module.InteractorModule;
+import pl.ches.citybikes.di.module.NextBikeApiModule;
 import pl.ches.citybikes.di.scope.AppScope;
 import pl.ches.citybikes.mvp.screen.main.MainComponent;
 
@@ -20,7 +22,9 @@ import pl.ches.citybikes.mvp.screen.main.MainComponent;
     BuildTypedModule.class,
     CityBikesApiModule.class,
     CommonModule.class,
-    InteractorModule.class
+    DiskModule.class,
+    InteractorModule.class,
+    NextBikeApiModule.class
 })
 public interface AppComponent {
 

@@ -8,7 +8,9 @@ import pl.ches.citybikes.di.module.AndroidModule;
 import pl.ches.citybikes.di.module.BuildTypedModule;
 import pl.ches.citybikes.di.module.CityBikesApiModule;
 import pl.ches.citybikes.di.module.CommonModule;
+import pl.ches.citybikes.di.module.DiskModule;
 import pl.ches.citybikes.di.module.InteractorModule;
+import pl.ches.citybikes.di.module.NextBikeApiModule;
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -42,7 +44,9 @@ public class App extends MultiDexApplication {
                              .buildTypedModule(initBuildTypedModule())
                              .cityBikesApiModule(new CityBikesApiModule())
                              .commonModule(new CommonModule())
+                             .diskModule(new DiskModule())
                              .interactorModule(new InteractorModule())
+                             .nextBikeApiModule(new NextBikeApiModule())
                              .build();
   }
 

@@ -1,6 +1,9 @@
 package pl.ches.citybikes.mvp.screen.main
 
+import android.view.Menu
+import android.view.MenuItem
 import pl.ches.citybikes.App
+import pl.ches.citybikes.R
 import pl.ches.citybikes.mvp.common.base.host.HostActivity
 
 /**
@@ -18,6 +21,21 @@ class MainActivity : HostActivity<MainView, MainPresenter>(), MainView {
   override fun injectDependencies() = component.inject(this)
 
   override fun createPresenter(): MainPresenter = component.presenter()
+
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    menuInflater.inflate(R.menu.menu_main, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when(item.itemId) {
+      R.id.menu_refresh -> {
+        presenter.refresh()
+        return true
+      }
+    }
+    return false
+  }
   //endregion
 
   //region View

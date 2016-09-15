@@ -8,7 +8,7 @@ import pl.ches.citybikes.BuildConfig
 object DevHelper {
 
   // Config
-  val RETROFIT_LOGS = debugOnly(false)
+  val RETROFIT_LOGS = debugOnly(true)
   val STETHO_LOGS = debugOnly(true)
   val LEAK_CANARY = debugOnly(false)
 

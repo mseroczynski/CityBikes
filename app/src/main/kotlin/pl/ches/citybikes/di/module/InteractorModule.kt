@@ -2,12 +2,16 @@ package pl.ches.citybikes.di.module
 
 import dagger.Module
 import dagger.Provides
+import pl.ches.citybikes.data.api.cb.CityBikesApiService
+import pl.ches.citybikes.data.api.nb.NextBikeApiService
 import pl.ches.citybikes.data.repo.AreaRepository
 import pl.ches.citybikes.di.qualifier.Job
 import pl.ches.citybikes.di.qualifier.PostJob
 import pl.ches.citybikes.di.scope.AppScope
 import pl.ches.citybikes.interactor.GetAreasInteractor
+import pl.ches.citybikes.interactor.GetStationsInteractor
 import pl.ches.citybikes.interactor.impl.GetAreasInteractorImpl
+import pl.ches.citybikes.interactor.impl.GetStationsInteractorImpl
 import rx.Scheduler
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -34,10 +38,19 @@ class InteractorModule {
 
   @AppScope
   @Provides
-  internal fun providePopulateAreasInteractor(@Job jobScheduler: Scheduler,
-                                              @PostJob postJobScheduler: Scheduler,
-                                              areaRepository: AreaRepository): GetAreasInteractor {
+  internal fun provideGetAreasInteractor(@Job jobScheduler: Scheduler,
+                                         @PostJob postJobScheduler: Scheduler,
+                                         areaRepository: AreaRepository): GetAreasInteractor {
     return GetAreasInteractorImpl(jobScheduler, postJobScheduler, areaRepository)
+  }
+
+  @AppScope
+  @Provides
+  internal fun provideGetStationsInteractor(@Job jobScheduler: Scheduler,
+                                            @PostJob postJobScheduler: Scheduler,
+                                            cityBikesApiService: CityBikesApiService,
+                                            nextBikeApiService: NextBikeApiService): GetStationsInteractor {
+    return GetStationsInteractorImpl(jobScheduler, postJobScheduler, cityBikesApiService, nextBikeApiService)
   }
 
 }

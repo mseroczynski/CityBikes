@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-data class ApiCbLocation(
+class ApiCbLocation(
 
     @SerializedName("city")
     var city: String,

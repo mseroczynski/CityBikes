@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-data class ApiCbExtra(
+class ApiCbExtra(
 
     @SerializedName("status")
     var status: String,

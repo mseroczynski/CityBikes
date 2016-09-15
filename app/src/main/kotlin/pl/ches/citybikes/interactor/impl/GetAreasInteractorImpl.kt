@@ -19,11 +19,13 @@ import javax.inject.Inject
 @AppScope
 class GetAreasInteractorImpl
 @Inject
-constructor(@Job jobScheduler: Scheduler, @PostJob postJobScheduler: Scheduler, private val areaRepository: AreaRepository)
+constructor(@Job jobScheduler: Scheduler,
+            @PostJob postJobScheduler: Scheduler,
+            private val areaRepository: AreaRepository)
 : GetAreasInteractor(jobScheduler, postJobScheduler) {
 
   override fun createObservable(param: Unit?): Observable<GetAreasResult> {
-    return areaRepository.get(SourceApi.CITY_BIKES, true)
+    return areaRepository.get(SourceApi.NEXT_BIKE, true)
         .flatMap(nextObs(), errorObs(), { Observable.empty() })
   }
 

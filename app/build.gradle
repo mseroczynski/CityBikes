@@ -156,7 +156,13 @@ dependencies {
   }
   compile dpn.retrofit2RxJava
   compile dpn.retrofit2Gson
+  compile (dpn.retrofit2SimpleXml) {
+    exclude module: 'stax'
+    exclude module: 'stax-api'
+    exclude module: 'xpp3'
+  }
   compile dpn.okhttp3
+
   compile dpn.mosby
   compile dpn.mosbyViewstate
   compile dpn.timber
@@ -170,11 +176,6 @@ dependencies {
   testCompile testDpn.mockitoCore
   testCompile testDpn.robolectric
   testCompile testDpn.robolectricMultidex
-
-  testCompile testDpn.powerMockJunit4
-  testCompile testDpn.powerMockJunit4Rule
-  testCompile testDpn.powerMockApiMockito
-  testCompile testDpn.powerMockClassloadingXstream
 
   kaptTest testDpn.dagger2Compiler
 
