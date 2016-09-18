@@ -11,7 +11,7 @@ import pl.ches.citybikes.di.module.DiskModule;
 import pl.ches.citybikes.di.module.InteractorModule;
 import pl.ches.citybikes.di.module.NextBikeApiModule;
 import pl.ches.citybikes.di.scope.AppScope;
-import pl.ches.citybikes.mvp.screen.main.MainComponent;
+import pl.ches.citybikes.presentation.screen.main.MainComponent;
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>

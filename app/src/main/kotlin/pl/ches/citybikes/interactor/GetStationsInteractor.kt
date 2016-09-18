@@ -11,8 +11,4 @@ import rx.Scheduler
 abstract class GetStationsInteractor(jobScheduler: Scheduler, postJobScheduler: Scheduler)
 : BaseInteractor<List<Area>, GetStationsResult>(jobScheduler, postJobScheduler)
 
-data class GetStationsResult(val type: GetStationsResultType, val stations: List<Station>? = null)
-
-enum class GetStationsResultType {
-  SUCCESS, ERROR
-}
+data class GetStationsResult(val stations: List<Station>)

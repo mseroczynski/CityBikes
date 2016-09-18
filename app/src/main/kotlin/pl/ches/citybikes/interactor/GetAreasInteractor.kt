@@ -10,8 +10,4 @@ import rx.Scheduler
 abstract class GetAreasInteractor(jobScheduler: Scheduler, postJobScheduler: Scheduler)
 : BaseInteractor<Unit?, GetAreasResult>(jobScheduler, postJobScheduler)
 
-data class GetAreasResult(val type: GetAreasResultType, val areas: List<Area>? = null)
-
-enum class GetAreasResultType {
-  SUCCESS, ERROR
-}
+data class GetAreasResult(val areas: List<Area>)

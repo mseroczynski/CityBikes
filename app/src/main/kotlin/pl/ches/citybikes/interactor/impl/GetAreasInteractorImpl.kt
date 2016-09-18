@@ -8,7 +8,6 @@ import pl.ches.citybikes.di.qualifier.PostJob
 import pl.ches.citybikes.di.scope.AppScope
 import pl.ches.citybikes.interactor.GetAreasInteractor
 import pl.ches.citybikes.interactor.GetAreasResult
-import pl.ches.citybikes.interactor.GetAreasResultType
 import rx.Observable
 import rx.Scheduler
 import javax.inject.Inject
@@ -26,15 +25,11 @@ constructor(@Job jobScheduler: Scheduler,
 
   override fun createObservable(param: Unit?): Observable<GetAreasResult> {
     return areaRepository.get(SourceApi.NEXT_BIKE, true)
-        .flatMap(nextObs(), errorObs(), { Observable.empty() })
+        .flatMap(nextObs())
   }
 
   private fun nextObs(): ((List<Area>) -> Observable<GetAreasResult>) = {
-    Observable.just(GetAreasResult(GetAreasResultType.SUCCESS, it))
-  }
-
-  private fun errorObs(): (Throwable) -> Observable<GetAreasResult> = {
-    Observable.just(GetAreasResult(GetAreasResultType.ERROR))
+    Observable.just(GetAreasResult(it))
   }
 
 }

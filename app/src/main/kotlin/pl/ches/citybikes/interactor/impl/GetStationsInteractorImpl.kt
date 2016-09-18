@@ -10,7 +10,6 @@ import pl.ches.citybikes.di.qualifier.PostJob
 import pl.ches.citybikes.di.scope.AppScope
 import pl.ches.citybikes.interactor.GetStationsInteractor
 import pl.ches.citybikes.interactor.GetStationsResult
-import pl.ches.citybikes.interactor.GetStationsResultType
 import rx.Observable
 import rx.Scheduler
 import rx.functions.FuncN
@@ -43,15 +42,11 @@ constructor(@Job jobScheduler: Scheduler,
     val zipFunc = FuncN { ArrayList<Station>().apply { it.forEach { addAll(it as List<Station>) } } }
 
     return Observable.zip(observables, zipFunc)
-        .flatMap(nextObs(), errorObs(), { Observable.empty() })
+        .flatMap(nextObs())
   }
 
   private fun nextObs(): ((List<Station>) -> Observable<GetStationsResult>) = {
-    Observable.just(GetStationsResult(GetStationsResultType.SUCCESS, it))
-  }
-
-  private fun errorObs(): (Throwable) -> Observable<GetStationsResult> = {
-    Observable.just(GetStationsResult(GetStationsResultType.ERROR))
+    Observable.just(GetStationsResult(it))
   }
 
 }
