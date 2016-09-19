@@ -2,9 +2,8 @@ package pl.ches.citybikes.di.module
 
 import dagger.Module
 import dagger.Provides
-import pl.ches.citybikes.data.api.cb.CityBikesApiService
-import pl.ches.citybikes.data.api.nb.NextBikeApiService
 import pl.ches.citybikes.data.repo.AreaRepository
+import pl.ches.citybikes.data.repo.StationRepository
 import pl.ches.citybikes.di.qualifier.Job
 import pl.ches.citybikes.di.qualifier.PostJob
 import pl.ches.citybikes.di.scope.AppScope
@@ -48,9 +47,8 @@ class InteractorModule {
   @Provides
   internal fun provideGetStationsInteractor(@Job jobScheduler: Scheduler,
                                             @PostJob postJobScheduler: Scheduler,
-                                            cityBikesApiService: CityBikesApiService,
-                                            nextBikeApiService: NextBikeApiService): GetStationsInteractor {
-    return GetStationsInteractorImpl(jobScheduler, postJobScheduler, cityBikesApiService, nextBikeApiService)
+                                            stationRepository: StationRepository): GetStationsInteractor {
+    return GetStationsInteractorImpl(jobScheduler, postJobScheduler, stationRepository)
   }
 
 }

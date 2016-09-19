@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!--Space-->
+  <dimen name="space_micro">2dp</dimen>
+  <dimen name="space_small">4dp</dimen>
+  <dimen name="space_medium">8dp</dimen>
+  <dimen name="space_large">16dp</dimen>
   <!--Text-->
   <item name="body_1_spacing" format="float" type="dimen">1.22448979592</item>
 </resources>

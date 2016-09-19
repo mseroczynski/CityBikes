@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!--Toolbar related-->
+  <style name="Toolbar">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">?attr/actionBarSize</item>
+    <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+  </style>
+
+  <style name="Toolbar.Collapsible" parent="Toolbar">
+    <item name="layout_collapseMode">pin</item>
+  </style>
+
+  <!--ProgressWheel related-->
+  <style name="ProgressWheel">
+    <item name="android:layout_centerHorizontal">true</item>
+    <item name="android:layout_centerVertical">true</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:padding">@dimen/space_medium</item>
+    <item name="matProg_barColor">@color/colorPrimary</item>
+    <item name="matProg_barWidth">3dp</item>
+    <item name="matProg_progressIndeterminate">true</item>
+    <item name="matProg_rimColor">@android:color/transparent</item>
+    <item name="matProg_rimWidth">0dp</item>
+    <item name="matProg_spinSpeed">0.75</item>
+  </style>
+
+  <style name="ProgressWheel.Big" parent="ProgressWheel">
+    <item name="android:layout_width">80dp</item>
+    <item name="android:layout_height">80dp</item>
+  </style>
+
+</resources>

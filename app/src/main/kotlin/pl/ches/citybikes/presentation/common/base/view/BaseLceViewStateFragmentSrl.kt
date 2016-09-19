@@ -31,4 +31,5 @@ abstract class BaseLceViewStateFragmentSrl<CV : SwipeRefreshLayout, M, V : Hoste
     super.showError(e, pullToRefresh)
     MvpLceUtil.stopLceLoading(contentView)
   }
+
 }

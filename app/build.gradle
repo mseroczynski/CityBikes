@@ -140,6 +140,7 @@ dependencies {
   compile dpn.rxBindingSupportV4Kotlin
   compile dpn.rxNetwork
   compile dpn.rxRelay
+  compile dpn.rxPreferences
   compile dpn.reactiveLocation
 
   kapt dpn.dbFlowProcessor
@@ -170,6 +171,7 @@ dependencies {
   compile dpn.materialTypeface
   compile dpn.materialishProgress
   compile dpn.calligraphy
+  compile dpn.spaceNavigationView
 
   // Unit tests
   testCompile testDpn.jUnit

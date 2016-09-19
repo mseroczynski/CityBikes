@@ -12,6 +12,7 @@ import pl.ches.citybikes.di.module.InteractorModule;
 import pl.ches.citybikes.di.module.NextBikeApiModule;
 import pl.ches.citybikes.di.scope.AppScope;
 import pl.ches.citybikes.presentation.screen.main.MainComponent;
+import pl.ches.citybikes.presentation.screen.main.stations.StationsComponent;
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -41,5 +42,7 @@ public interface AppComponent {
 
   // Subcomponents
   MainComponent plusMain();
+
+  StationsComponent plustStations();
 
 }

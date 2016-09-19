@@ -1,8 +1,10 @@
 package pl.ches.citybikes.presentation.common.base.presenter
 
+import android.support.annotation.VisibleForTesting
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter
 import com.hannesdorfmann.mosby.mvp.MvpView
 import pl.ches.citybikes.presentation.common.base.scheduler.AndroidSchedulerTransformer
+import pl.ches.citybikes.presentation.common.base.scheduler.TestSchedulerTransformer
 import rx.Observable
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
@@ -13,10 +15,10 @@ import rx.subscriptions.CompositeSubscription
 abstract class MvpRxPresenter<V : MvpView> : MvpNullObjectBasePresenter<V>() {
 
   protected var subscriptions: CompositeSubscription? = null
+  @VisibleForTesting var useTestScheduler: Boolean = false
 
-  protected fun <T> applyScheduler(): Observable.Transformer<T, T> {
-    return AndroidSchedulerTransformer()
-  }
+  protected fun <T> applyScheduler(): Observable.Transformer<T, T> =
+      if (useTestScheduler) TestSchedulerTransformer() else AndroidSchedulerTransformer()
 
   fun addSubscription(subscription: Subscription) {
     if (subscriptions == null || subscriptions!!.isUnsubscribed) {
@@ -43,4 +45,5 @@ abstract class MvpRxPresenter<V : MvpView> : MvpNullObjectBasePresenter<V>() {
       unsubscribeAll()
     }
   }
+
 }

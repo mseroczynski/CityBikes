@@ -80,6 +80,7 @@ ext {
       rxBindingSupportV4Kotlin: "com.jakewharton.rxbinding:rxbinding-support-v4-kotlin:${rxBindingVersion}",
       rxNetwork               : "com.github.pwittchen:reactivenetwork:${rxNetworkVersion}",
       rxRelay                 : "com.jakewharton.rxrelay:rxrelay:${rxRelayVersion}",
+      rxPreferences           : "com.f2prateek.rx.preferences:rx-preferences:1.0.2",
       reactiveLocation        : "pl.charmas.android:android-reactive-location:${reactiveLocationVersion}@aar",
 
       dbFlowProcessor         : "com.github.Raizlabs.DBFlow:dbflow-processor:${dbFlowVersion}",
@@ -103,6 +104,7 @@ ext {
       materialTypeface        : "com.mikepenz:google-material-typeface:2.2.0.1@aar",
       materialishProgress     : "com.pnikosis:materialish-progress:1.7",
       calligraphy             : "uk.co.chrisjenx:calligraphy:2.1.0",
+      spaceNavigationView     : "com.github.armcha:SpaceNavigationView:1.3.2"
 
   ]
 
@@ -119,13 +121,13 @@ ext {
 
   testDependencies = [
 
-      jUnit                       : "junit:junit:${jUnitVersion}",
-      mockitoCore                 : "org.robolectric:robolectric:${mockitoCoreVersion}",
-      robolectric                 : "org.robolectric:robolectric:${robolectricVersion}",
-      robolectricMultidex         : "org.robolectric:shadows-multidex:${robolectricVersion}",
+      jUnit              : "junit:junit:${jUnitVersion}",
+      mockitoCore        : "org.robolectric:robolectric:${mockitoCoreVersion}",
+      robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
+      robolectricMultidex: "org.robolectric:shadows-multidex:${robolectricVersion}",
 
-      mockWebServer               : "com.squareup.okhttp3:mockwebserver:${okhttpVersion}",
-      dagger2Compiler             : "com.google.dagger:dagger-compiler:${daggerVersion}",
+      mockWebServer      : "com.squareup.okhttp3:mockwebserver:${okhttpVersion}",
+      dagger2Compiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
 
   ]
 

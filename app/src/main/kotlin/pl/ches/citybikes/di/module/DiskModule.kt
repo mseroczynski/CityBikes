@@ -3,7 +3,9 @@ package pl.ches.citybikes.di.module
 import dagger.Module
 import dagger.Provides
 import pl.ches.citybikes.data.disk.store.AreaStore
+import pl.ches.citybikes.data.disk.store.StationStore
 import pl.ches.citybikes.data.disk.store.impl.AreaStoreImpl
+import pl.ches.citybikes.data.disk.store.impl.StationStoreImpl
 import pl.ches.citybikes.di.scope.AppScope
 
 /**
@@ -15,5 +17,9 @@ class DiskModule {
   @AppScope
   @Provides
   internal fun provideAreaStore(): AreaStore = AreaStoreImpl()
+
+  @AppScope
+  @Provides
+  internal fun provideStationStore(): StationStore = StationStoreImpl()
 
 }

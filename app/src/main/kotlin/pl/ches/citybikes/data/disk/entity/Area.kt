@@ -1,8 +1,7 @@
 package pl.ches.citybikes.data.disk.entity
 
-import com.raizlabs.android.dbflow.annotation.Column
-import com.raizlabs.android.dbflow.annotation.PrimaryKey
-import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.annotation.*
+import com.raizlabs.android.dbflow.kotlinextensions.*
 import com.raizlabs.android.dbflow.structure.BaseModel
 import pl.ches.citybikes.data.disk.Db
 import pl.ches.citybikes.data.disk.enums.SourceApi
@@ -10,6 +9,7 @@ import pl.ches.citybikes.data.disk.enums.SourceApi
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
+@ModelContainer
 @Table(name = Area.TABLE_NAME, database = Db::class, cachingEnabled = true)
 class Area
 constructor(
@@ -34,6 +34,21 @@ constructor(
     var longitude: Double = 0.0
 
 ) : BaseModel() {
+
+  @JvmField
+  var stations: List<Station>? = null
+
+  @OneToMany(methods = arrayOf(OneToMany.Method.ALL), variableName = "stations")
+  fun getStations(): List<Station> {
+    if (stations == null || stations!!.isEmpty()) {
+      stations = (
+          select
+              from Station::class
+              where (Station_Table.fkArea_id eq this.id)
+          ).list
+    }
+    return stations!!
+  }
 
   companion object {
     const val TABLE_NAME = "Area"

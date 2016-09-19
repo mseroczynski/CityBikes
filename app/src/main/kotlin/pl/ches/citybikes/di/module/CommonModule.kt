@@ -10,8 +10,11 @@ import pl.ches.citybikes.common.Consts
 import pl.ches.citybikes.data.api.cb.CityBikesApiService
 import pl.ches.citybikes.data.api.nb.NextBikeApiService
 import pl.ches.citybikes.data.disk.store.AreaStore
+import pl.ches.citybikes.data.disk.store.StationStore
 import pl.ches.citybikes.data.repo.AreaRepository
+import pl.ches.citybikes.data.repo.StationRepository
 import pl.ches.citybikes.data.repo.impl.AreaRepositoryImpl
+import pl.ches.citybikes.data.repo.impl.StationRepositoryImpl
 import pl.ches.citybikes.di.scope.AppScope
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -24,9 +27,18 @@ class CommonModule {
 
   @AppScope
   @Provides
-  internal fun provideAreaRepository(cityBikesApiService: CityBikesApiService, nextBikeApiService: NextBikeApiService,
+  internal fun provideAreaRepository(cityBikesApiService: CityBikesApiService,
+                                     nextBikeApiService: NextBikeApiService,
                                      areaStore: AreaStore): AreaRepository {
     return AreaRepositoryImpl(cityBikesApiService, nextBikeApiService, areaStore)
+  }
+
+  @AppScope
+  @Provides
+  internal fun provideStationRepository(cityBikesApiService: CityBikesApiService,
+                                        nextBikeApiService: NextBikeApiService,
+                                        stationStore: StationStore): StationRepository {
+    return StationRepositoryImpl(cityBikesApiService, nextBikeApiService, stationStore)
   }
 
   @AppScope
@@ -53,6 +65,12 @@ class CommonModule {
     builder.followRedirects(true)
 
     return builder.build()
+  }
+
+  @AppScope
+  @Provides
+  internal fun provideCachePrefs() {
+
   }
 
 }

@@ -28,9 +28,9 @@ protected constructor(private val jobScheduler: Scheduler, private val postJobSc
 
   fun execute(subscriber: Subscriber<in Result>, param: Param): Subscription {
     checkNotNull(subscriber)
-    val subscribtion = asObservable(param).subscribe(subscriber)
-    subscriptions.add(subscribtion)
-    return subscribtion
+    val subscription = asObservable(param).subscribe(subscriber)
+    subscriptions.add(subscription)
+    return subscription
   }
 
   fun execute(onNext: Action1<in Result>, param: Param): Subscription {

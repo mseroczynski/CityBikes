@@ -9,6 +9,6 @@ import rx.Scheduler
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
 abstract class GetStationsInteractor(jobScheduler: Scheduler, postJobScheduler: Scheduler)
-: BaseInteractor<List<Area>, GetStationsResult>(jobScheduler, postJobScheduler)
+: BaseInteractor<GetStationsParam, List<Station>>(jobScheduler, postJobScheduler)
 
-data class GetStationsResult(val stations: List<Station>)
+data class GetStationsParam(val areas: List<Area>, val forceRefresh: Boolean)
