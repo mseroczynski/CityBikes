@@ -33,7 +33,6 @@ abstract class MvpLceRxPresenter<V : MvpLceView<M>, M>(schedulersProvider: Sched
       override fun onNext(m: M) = this@MvpLceRxPresenter.onNext(m)
 
       override fun onCompleted() = this@MvpLceRxPresenter.onCompleted()
-
     }
 
     obs = obs.compose(applyScheduler<M>())
@@ -73,6 +72,6 @@ abstract class MvpLceRxPresenter<V : MvpLceView<M>, M>(schedulersProvider: Sched
     unsubscribeLce()
   }
 
-  fun lceDataLoaded(data: M) {}
+  open protected fun lceDataLoaded(data: M) {}
 
 }

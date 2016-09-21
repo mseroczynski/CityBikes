@@ -6,4 +6,4 @@ import pl.ches.citybikes.presentation.common.base.host.HostedMvpLceView
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-interface StationsView : HostedMvpLceView<List<Station>>
+interface StationsView : HostedMvpLceView<List<Pair<Station, Float>>>

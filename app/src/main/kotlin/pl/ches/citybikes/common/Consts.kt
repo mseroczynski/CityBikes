@@ -8,6 +8,8 @@ class Consts {
   object Config {
     const val OK_HTTP_API_TIMEOUT_IN_S = 20L
     const val INITIAL_RADIUS_IN_KM = 3.0
+    const val LOCATION_UPDATE_INTERVAL_IN_MS = 1000L
+    const val MAX_STATIONS_ON_LIST_COUNT = 50
   }
 
   object Prefs {

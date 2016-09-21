@@ -14,6 +14,7 @@ import pl.ches.citybikes.interactor.GetStationsInteractor
 import pl.ches.citybikes.interactor.GetStationsParam
 import rx.Observable
 import rx.functions.Func2
+import java.util.concurrent.TimeUnit
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -24,38 +25,61 @@ constructor(private val getAreasInteractor: GetAreasInteractor,
             private val cachePrefs: CachePrefs,
             private val gpsCalculator: GpsCalculator) : StationsScout {
 
+  private val lastNonEmptyLocationObs: Observable<LatLng> by lazy {
+    return@lazy cachePrefs.lastLocationObs().filter { it != null }
+  }
+
+  private val lastNonEmptyAreasIdsObs: Observable<List<String>> by lazy {
+    return@lazy cachePrefs.currentAreasIdsObs().map { it.toList() }.filter { it.size > 0 }
+  }
+
   //region StationsScout
-  override fun currentSortedStationsObs(forceRefresh: Boolean): Observable<List<Station>> {
-    return currentAreasObs(forceRefresh, forceRefresh) // TODO More params?
+  // TODO this should be just scouts subscription on other stream vals with combinelatest
+  override fun currentSortedStationsObs(forceRefresh: Boolean): Observable<List<Pair<Station, Float>>> {
+    val stationsObs = currentAreasObs(forceRefresh)
         .flatMap { areas ->
           val param = GetStationsParam(areas, forceRefresh)
           val stationsObs = getStationsInteractor.asObservable(param)
           stationsObs
         }
+
+    val zipFunc = Func2<List<Station>, LatLng, List<Pair<Station, Float>>> { stations, lastLocation ->
+      // Exclude duplicates, which may occur while app uses independent providers
+      val stationsWithNoDuplicates = stations.distinctBy { it.originalName }
+      // Calculate distance
+      val stationsWithDistances = stationsWithNoDuplicates.map {
+        it to gpsCalculator.getDistanceInMeters(lastLocation, LatLng(it.latitude, it.longitude))
+      }
+      // Sort
+      stationsWithDistances.sortedBy { it.second }.take(Consts.Config.MAX_STATIONS_ON_LIST_COUNT)
+    }
+
+    // TODO Further optimization + Consts.Config?
+    val updateDistancesObs = lastNonEmptyLocationObs.debounce(3, TimeUnit.SECONDS)
+
+    return Observable.combineLatest(stationsObs, updateDistancesObs, zipFunc)
   }
   //endregion
 
-  private fun currentAreasObs(forceUpdatedLocation: Boolean, forceRefreshAreas: Boolean): Observable<List<Area>> {
+  private fun currentAreasObs(forceUpdatedLocation: Boolean, forceRefreshAreas: Boolean = false): Observable<List<Area>> {
     val param = GetAreasParam(SourceApi.ANY, forceRefreshAreas)
     val areasObs = getAreasInteractor.asObservable(param)
-    val lastKnownLocationObs = cachePrefs.lastLocationObs()
-    val currentAreasIdsObs = cachePrefs.currentAreasIdsObs().map { it.toList() }.filter { it.size > 0 }
 
-    // Combines all areas with location to provide nearest Areas
+    // Zips last known location and areas
     val freshZipFunc = Func2<List<Area>, LatLng, List<Area>> { areas, lastLocation ->
       val radiusInKm = Consts.Config.INITIAL_RADIUS_IN_KM
       val areasInRadiusOrClosest = getAreasInRadiusOrClosest(areas, lastLocation, radiusInKm)
       cachePrefs.lastAreasIds = areasInRadiusOrClosest.map { it.id }.toSet()
       areasInRadiusOrClosest
     }
+    val freshObs = Observable.zip(areasObs, lastNonEmptyLocationObs, freshZipFunc)
 
-    // Retrieves last saved Areas
+    // Zips last known areas id's and areas
     val cacheZipFunc = Func2<List<Area>, List<String>, List<Area>> { areas, currentAreasIds ->
       areas.filter { currentAreasIds.contains(it.id) }
+      areas
     }
-
-    val cachedObs = Observable.zip(areasObs, currentAreasIdsObs, cacheZipFunc)
-    val freshObs = Observable.zip(areasObs, lastKnownLocationObs, freshZipFunc)
+    val cachedObs = Observable.zip(areasObs, lastNonEmptyAreasIdsObs, cacheZipFunc)
 
     // If no refresh of location is forced, we may use cached in prefs areas if they exist
     when (forceUpdatedLocation) {

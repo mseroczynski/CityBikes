@@ -8,6 +8,6 @@ import rx.Observable
  */
 interface StationsScout {
 
-  fun currentSortedStationsObs(forceRefresh: Boolean): Observable<List<Station>>
+  fun currentSortedStationsObs(forceRefresh: Boolean): Observable<List<Pair<Station, Float>>>
 
 }

@@ -19,7 +19,7 @@ import pl.ches.citybikes.presentation.common.widget.rv.ItemOffsetDecoration
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Station>, StationsView, StationsPresenter>(), StationsView, StationsAdapter.Listener {
+class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Pair<Station, Float>>, StationsView, StationsPresenter>(), StationsView, StationsAdapter.Listener {
 
   private val component = App.component().plustStations()
 
@@ -50,11 +50,11 @@ class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<St
 
   override fun loadData(pullToRefresh: Boolean) = presenter.loadData(pullToRefresh)
 
-  override fun createViewState(): LceViewState<List<Station>, StationsView> = RetainingLceViewState()
+  override fun createViewState(): LceViewState<List<Pair<Station, Float>>, StationsView> = RetainingLceViewState()
 
-  override fun getData(): List<Station> = adapter.getItems()
+  override fun getData(): List<Pair<Station, Float>> = adapter.getItems()
 
-  override fun setData(data: List<Station>) = adapter.setItems(data)
+  override fun setData(data: List<Pair<Station, Float>>) = adapter.setItems(data)
   //endregion
 
   //region Events

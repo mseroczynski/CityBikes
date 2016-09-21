@@ -20,7 +20,7 @@ import java.util.*
 class StationsAdapter(private val context: Context,
                       private val listener: Listener) : RecyclerView.Adapter<BaseViewHolder>() {
 
-  private val stations: ArrayList<Station> = ArrayList()
+  private val distancedStations: ArrayList<Pair<Station, Float>> = ArrayList()
 
   override fun onBindViewHolder(holder: BaseViewHolder?, position: Int) {
     when (holder) {
@@ -30,13 +30,14 @@ class StationsAdapter(private val context: Context,
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder = StationViewHolder(parent)
 
-  override fun getItemCount(): Int = stations.size
+  override fun getItemCount(): Int = distancedStations.size
 
-  fun getItems(): List<Station> = stations
+  fun getItems(): List<Pair<Station, Float>> = distancedStations
 
-  fun setItems(items: List<Station>) {
-    stations.clear()
-    stations.addAll(items)
+  fun setItems(items: List<Pair<Station, Float>>) {
+    distancedStations.clear()
+    distancedStations.addAll(items)
+    notifyDataSetChanged()
   }
 
   inner class StationViewHolder(parent: ViewGroup) : BaseViewHolder(
@@ -47,11 +48,11 @@ class StationsAdapter(private val context: Context,
     }
 
     fun bind(position: Int) {
-      val station = stations[position]
+      val station = distancedStations[position].first
+      val distance = distancedStations[position].second
       itemView.name.text = station.originalName
       itemView.bikes.text = station.freeBikes
-      // TODO
-//      itemView.distance.text = station.
+      itemView.distance.text = "$distance" // TODO
       itemView.setBackgroundDrawable(ContextCompat.getDrawable(context, iconResId(station)))
     }
 
