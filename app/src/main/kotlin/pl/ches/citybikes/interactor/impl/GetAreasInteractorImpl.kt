@@ -2,13 +2,11 @@ package pl.ches.citybikes.interactor.impl
 
 import pl.ches.citybikes.data.disk.entity.Area
 import pl.ches.citybikes.data.repo.AreaRepository
-import pl.ches.citybikes.di.qualifier.Job
-import pl.ches.citybikes.di.qualifier.PostJob
 import pl.ches.citybikes.di.scope.AppScope
+import pl.ches.citybikes.domain.common.SchedulersProvider
 import pl.ches.citybikes.interactor.GetAreasInteractor
 import pl.ches.citybikes.interactor.GetAreasParam
 import rx.Observable
-import rx.Scheduler
 import javax.inject.Inject
 
 /**
@@ -17,10 +15,9 @@ import javax.inject.Inject
 @AppScope
 class GetAreasInteractorImpl
 @Inject
-constructor(@Job jobScheduler: Scheduler,
-            @PostJob postJobScheduler: Scheduler,
+constructor(schedulersProvider: SchedulersProvider,
             private val areaRepository: AreaRepository)
-: GetAreasInteractor(jobScheduler, postJobScheduler) {
+: GetAreasInteractor(schedulersProvider) {
 
   override fun createObservable(param: GetAreasParam): Observable<List<Area>> {
     return areaRepository.get(param.sourceApi, param.forceRefresh)

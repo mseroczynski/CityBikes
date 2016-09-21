@@ -1,6 +1,7 @@
 package pl.ches.citybikes.di.module
 
 import android.content.Context
+import com.f2prateek.rx.preferences.RxSharedPreferences
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -11,11 +12,22 @@ import pl.ches.citybikes.data.api.cb.CityBikesApiService
 import pl.ches.citybikes.data.api.nb.NextBikeApiService
 import pl.ches.citybikes.data.disk.store.AreaStore
 import pl.ches.citybikes.data.disk.store.StationStore
+import pl.ches.citybikes.data.prefs.CachePrefs
+import pl.ches.citybikes.data.prefs.impl.CachePrefsImpl
 import pl.ches.citybikes.data.repo.AreaRepository
 import pl.ches.citybikes.data.repo.StationRepository
 import pl.ches.citybikes.data.repo.impl.AreaRepositoryImpl
 import pl.ches.citybikes.data.repo.impl.StationRepositoryImpl
 import pl.ches.citybikes.di.scope.AppScope
+import pl.ches.citybikes.domain.common.SchedulersProvider
+import pl.ches.citybikes.domain.gps.GpsCalculator
+import pl.ches.citybikes.domain.gps.LocationUpdater
+import pl.ches.citybikes.domain.gps.impl.GpsCalculatorImpl
+import pl.ches.citybikes.domain.gps.impl.LocationUpdaterImpl
+import pl.ches.citybikes.domain.stations.StationsScout
+import pl.ches.citybikes.domain.stations.impl.StationsScoutImpl
+import pl.ches.citybikes.interactor.GetAreasInteractor
+import pl.ches.citybikes.interactor.GetStationsInteractor
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -69,8 +81,31 @@ class CommonModule {
 
   @AppScope
   @Provides
-  internal fun provideCachePrefs() {
+  internal fun provideStationsScout(getAreasInteractor: GetAreasInteractor,
+                                    getStationsInteractor: GetStationsInteractor,
+                                    cachePrefs: CachePrefs,
+                                    gpsCalculator: GpsCalculator): StationsScout {
+    return StationsScoutImpl(getAreasInteractor, getStationsInteractor, cachePrefs, gpsCalculator)
+  }
 
+  @AppScope
+  @Provides
+  internal fun provideGpsCalculator() : GpsCalculator = GpsCalculatorImpl()
+
+  @AppScope
+  @Provides
+  internal fun provideLocationUpdater(schedulersProvider: SchedulersProvider,
+                                      reactiveLocationProvider: ReactiveLocationProvider,
+                                      cachePrefs: CachePrefs) : LocationUpdater {
+    return LocationUpdaterImpl(schedulersProvider, reactiveLocationProvider, cachePrefs)
+  }
+
+  @AppScope
+  @Provides
+  internal fun provideCachePrefs(context: Context): CachePrefs {
+    val sharedPreferences = context.getSharedPreferences(Consts.Prefs.FILE_NAME_CACHE_PREFS, Context.MODE_PRIVATE)
+    val rxPrefs = RxSharedPreferences.create(sharedPreferences)
+    return CachePrefsImpl(rxPrefs)
   }
 
 }

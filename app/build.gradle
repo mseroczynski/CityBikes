@@ -37,6 +37,10 @@ android {
       java.srcDirs += 'src/debug/kotlin'
       manifest.srcFile 'src/debug/manifests/AndroidManifest.xml'
     }
+
+    test {
+      java.srcDirs += 'src/test/kotlin'
+    }
   }
 
   compileOptions {
@@ -110,6 +114,8 @@ kapt {
 }
 
 dependencies {
+  compile project(':spacelib')
+
   def dpn = cfg.dependencies
   def testDpn = cfg.testDependencies
   def debugDpn = cfg.debugDependencies
@@ -141,6 +147,7 @@ dependencies {
   compile dpn.rxNetwork
   compile dpn.rxRelay
   compile dpn.rxPreferences
+  compile dpn.reactivePermissions
   compile dpn.reactiveLocation
 
   kapt dpn.dbFlowProcessor
@@ -171,7 +178,7 @@ dependencies {
   compile dpn.materialTypeface
   compile dpn.materialishProgress
   compile dpn.calligraphy
-  compile dpn.spaceNavigationView
+  // compile dpn.spaceNavigationView
 
   // Unit tests
   testCompile testDpn.jUnit

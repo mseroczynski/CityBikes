@@ -81,6 +81,7 @@ ext {
       rxNetwork               : "com.github.pwittchen:reactivenetwork:${rxNetworkVersion}",
       rxRelay                 : "com.jakewharton.rxrelay:rxrelay:${rxRelayVersion}",
       rxPreferences           : "com.f2prateek.rx.preferences:rx-preferences:1.0.2",
+      reactivePermissions     : "com.github.maxcruz:reactive-permissions:1.3",
       reactiveLocation        : "pl.charmas.android:android-reactive-location:${reactiveLocationVersion}@aar",
 
       dbFlowProcessor         : "com.github.Raizlabs.DBFlow:dbflow-processor:${dbFlowVersion}",
@@ -122,7 +123,7 @@ ext {
   testDependencies = [
 
       jUnit              : "junit:junit:${jUnitVersion}",
-      mockitoCore        : "org.robolectric:robolectric:${mockitoCoreVersion}",
+      mockitoCore        : "org.mockito:mockito-core:${mockitoCoreVersion}",
       robolectric        : "org.robolectric:robolectric:${robolectricVersion}",
       robolectricMultidex: "org.robolectric:shadows-multidex:${robolectricVersion}",
 

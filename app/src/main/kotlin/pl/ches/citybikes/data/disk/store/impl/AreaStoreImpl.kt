@@ -19,7 +19,7 @@ constructor() : AreaStore {
   override fun put(value: List<Area>) {
     FlowManager.getDatabase(Db::class.java).executeTransaction { databaseWrapper ->
       FastStoreModelTransaction
-          .insertBuilder(FlowManager.getModelAdapter(Area::class.java))
+          .saveBuilder(FlowManager.getModelAdapter(Area::class.java))
           .addAll(value)
           .build()
           .execute(databaseWrapper)

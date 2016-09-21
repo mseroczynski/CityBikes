@@ -1,4 +1,4 @@
-package pl.ches.citybikes.feature.gps;
+package pl.ches.citybikes.domain.gps.internal;
 
 /**
  * <p>Represents a point on the surface of a sphere. (The Earth is almost spherical.)</p>

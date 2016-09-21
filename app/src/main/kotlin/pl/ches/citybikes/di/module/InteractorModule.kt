@@ -4,16 +4,12 @@ import dagger.Module
 import dagger.Provides
 import pl.ches.citybikes.data.repo.AreaRepository
 import pl.ches.citybikes.data.repo.StationRepository
-import pl.ches.citybikes.di.qualifier.Job
-import pl.ches.citybikes.di.qualifier.PostJob
 import pl.ches.citybikes.di.scope.AppScope
+import pl.ches.citybikes.domain.common.SchedulersProvider
 import pl.ches.citybikes.interactor.GetAreasInteractor
 import pl.ches.citybikes.interactor.GetStationsInteractor
 import pl.ches.citybikes.interactor.impl.GetAreasInteractorImpl
 import pl.ches.citybikes.interactor.impl.GetStationsInteractorImpl
-import rx.Scheduler
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -23,32 +19,16 @@ class InteractorModule {
 
   @AppScope
   @Provides
-  @Job
-  internal fun provideJobScheduler(): Scheduler {
-    return Schedulers.io()
-  }
-
-  @AppScope
-  @Provides
-  @PostJob
-  internal fun providePostJobScheduler(): Scheduler {
-    return AndroidSchedulers.mainThread()
-  }
-
-  @AppScope
-  @Provides
-  internal fun provideGetAreasInteractor(@Job jobScheduler: Scheduler,
-                                         @PostJob postJobScheduler: Scheduler,
+  internal fun provideGetAreasInteractor(schedulersProvider: SchedulersProvider,
                                          areaRepository: AreaRepository): GetAreasInteractor {
-    return GetAreasInteractorImpl(jobScheduler, postJobScheduler, areaRepository)
+    return GetAreasInteractorImpl(schedulersProvider, areaRepository)
   }
 
   @AppScope
   @Provides
-  internal fun provideGetStationsInteractor(@Job jobScheduler: Scheduler,
-                                            @PostJob postJobScheduler: Scheduler,
+  internal fun provideGetStationsInteractor(schedulersProvider: SchedulersProvider,
                                             stationRepository: StationRepository): GetStationsInteractor {
-    return GetStationsInteractorImpl(jobScheduler, postJobScheduler, stationRepository)
+    return GetStationsInteractorImpl(schedulersProvider, stationRepository)
   }
 
 }

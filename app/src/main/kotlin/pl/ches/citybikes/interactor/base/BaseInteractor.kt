@@ -1,5 +1,6 @@
 package pl.ches.citybikes.interactor.base
 
+import pl.ches.citybikes.domain.common.SchedulersProvider
 import rx.Observable
 import rx.Scheduler
 import rx.Subscriber
@@ -14,23 +15,22 @@ import rx.subscriptions.CompositeSubscription
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
 abstract class BaseInteractor<Param, Result>
-protected constructor(private val jobScheduler: Scheduler, private val postJobScheduler: Scheduler) : Subscription {
+protected constructor(private val schedulersProvider: SchedulersProvider) : Subscription {
 
   private val subscriptions: CompositeSubscription
 
   init {
-    checkNotNull(jobScheduler)
-    checkNotNull(postJobScheduler)
+    checkNotNull(schedulersProvider)
     subscriptions = CompositeSubscription()
   }
 
-  fun asObservable(param: Param) = createObservable(param).subscribeOn(jobScheduler).observeOn(postJobScheduler)
+  fun asObservable(param: Param) = createObservable(param).compose(schedulersProvider.apply<Result>())
 
   fun execute(subscriber: Subscriber<in Result>, param: Param): Subscription {
     checkNotNull(subscriber)
-    val subscription = asObservable(param).subscribe(subscriber)
-    subscriptions.add(subscription)
-    return subscription
+    val subscribtion = asObservable(param).subscribe(subscriber)
+    subscriptions.add(subscribtion)
+    return subscribtion
   }
 
   fun execute(onNext: Action1<in Result>, param: Param): Subscription {
@@ -63,6 +63,5 @@ protected constructor(private val jobScheduler: Scheduler, private val postJobSc
   }
 
   abstract fun createObservable(param: Param): Observable<Result>
-
 }
 

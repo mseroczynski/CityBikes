@@ -1,13 +1,14 @@
 package pl.ches.citybikes.presentation.common.base.presenter
 
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceView
+import pl.ches.citybikes.domain.common.SchedulersProvider
 import rx.Observable
 import rx.Subscriber
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-abstract class MvpLceRxPresenter<V : MvpLceView<M>, M> : MvpRxPresenter<V>() {
+abstract class MvpLceRxPresenter<V : MvpLceView<M>, M>(schedulersProvider: SchedulersProvider) : MvpRxPresenter<V>(schedulersProvider) {
 
   protected var subscriber: Subscriber<M>? = null
 

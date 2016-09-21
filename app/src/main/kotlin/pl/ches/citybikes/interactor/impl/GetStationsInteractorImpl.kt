@@ -5,6 +5,7 @@ import pl.ches.citybikes.data.repo.StationRepository
 import pl.ches.citybikes.di.qualifier.Job
 import pl.ches.citybikes.di.qualifier.PostJob
 import pl.ches.citybikes.di.scope.AppScope
+import pl.ches.citybikes.domain.common.SchedulersProvider
 import pl.ches.citybikes.interactor.GetStationsInteractor
 import pl.ches.citybikes.interactor.GetStationsParam
 import rx.Observable
@@ -19,10 +20,9 @@ import javax.inject.Inject
 @AppScope
 class GetStationsInteractorImpl
 @Inject
-constructor(@Job jobScheduler: Scheduler,
-            @PostJob postJobScheduler: Scheduler,
+constructor(schedulersProvider: SchedulersProvider,
             private val stationRepository: StationRepository)
-: GetStationsInteractor(jobScheduler, postJobScheduler) {
+: GetStationsInteractor(schedulersProvider) {
 
   override fun createObservable(param: GetStationsParam): Observable<List<Station>> {
     val observables = ArrayList<Observable<List<Station>>>().apply {

@@ -10,6 +10,7 @@ import pl.ches.citybikes.di.module.CommonModule;
 import pl.ches.citybikes.di.module.DiskModule;
 import pl.ches.citybikes.di.module.InteractorModule;
 import pl.ches.citybikes.di.module.NextBikeApiModule;
+import pl.ches.citybikes.di.module.SchedulersModule;
 import pl.ches.citybikes.di.scope.AppScope;
 import pl.ches.citybikes.presentation.screen.main.MainComponent;
 import pl.ches.citybikes.presentation.screen.main.stations.StationsComponent;
@@ -25,7 +26,8 @@ import pl.ches.citybikes.presentation.screen.main.stations.StationsComponent;
     CommonModule.class,
     DiskModule.class,
     InteractorModule.class,
-    NextBikeApiModule.class
+    NextBikeApiModule.class,
+    SchedulersModule.class
 })
 public interface AppComponent {
 

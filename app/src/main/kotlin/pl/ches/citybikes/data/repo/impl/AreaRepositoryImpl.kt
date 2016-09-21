@@ -23,7 +23,7 @@ constructor(private val cityBikesApiService: CityBikesApiService,
       true -> return netObs(sourceApi)
       false -> return Observable
           .concat(diskObs(sourceApi), netObs(sourceApi))
-          .first { it != null }
+          .first { it != null && it.isNotEmpty() }
     }
   }
 
@@ -31,14 +31,16 @@ constructor(private val cityBikesApiService: CityBikesApiService,
     return when (sourceApi) {
       SourceApi.CITY_BIKES -> cityBikesApiService.getAreas()
       SourceApi.NEXT_BIKE -> nextBikeApiService.getAreas()
-      SourceApi.ANY -> Observable.zip(nextBikeApiService.getAreas(), cityBikesApiService.getAreas(), Func2 { nbList, cbList ->
-        ArrayList<Area>().apply {
-          nbList.forEach { add(it) }
-          cbList.forEach { add(it) }
-        }
-      })
+      SourceApi.ANY -> Observable.zip(nextBikeApiService.getAreas(), cityBikesApiService.getAreas(),
+          Func2 { nbList, cbList ->
+            ArrayList<Area>().apply {
+              nbList.forEach { add(it) }
+              cbList.forEach { add(it) }
+            }
+          })
     }.doOnNext { areas ->
       areaStore.put(areas)
+      areas
     }
   }
 

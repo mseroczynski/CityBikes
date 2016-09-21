@@ -17,7 +17,7 @@ constructor() : StationStore {
   override fun put(value: List<Station>) {
     FlowManager.getDatabase(Db::class.java).executeTransaction { databaseWrapper ->
       FastStoreModelTransaction
-          .insertBuilder(FlowManager.getModelAdapter(Station::class.java))
+          .saveBuilder(FlowManager.getModelAdapter(Station::class.java))
           .addAll(value)
           .build()
           .execute(databaseWrapper)
