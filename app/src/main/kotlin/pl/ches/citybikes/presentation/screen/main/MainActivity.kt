@@ -10,6 +10,7 @@ import pl.ches.citybikes.App
 import pl.ches.citybikes.R
 import pl.ches.citybikes.presentation.common.base.host.HostActivity
 import pl.ches.citybikes.presentation.common.navigation.Fragments
+import pl.ches.citybikes.presentation.screen.main.map.MapFragment
 import pl.ches.citybikes.presentation.screen.main.stations.StationsFragment
 
 /**
@@ -60,6 +61,7 @@ class MainActivity : HostActivity<MainView, MainPresenter>(), MainView {
   private fun displayFragment(itemIndex: Int) {
     val fragment: Fragment? = when (itemIndex) {
       0 -> StationsFragment.newInstance()
+      1 -> MapFragment.newInstance()
       else -> null
     }
     fragment?.let {

@@ -29,12 +29,12 @@ constructor(private val rxPrefs: RxSharedPreferences) : CachePrefs {
     get() = lastAreasPref.get()
     set(value) = lastAreasPref.set(value)
 
-  override fun currentAreasIdsObs(): Observable<Set<String>> = lastAreasPref.asObservable()
+  override fun lastAreasIdsObs(): Observable<Set<String>> = lastAreasPref.asObservable().filter { it != null }
 
   override var lastLocation: LatLng?
     get() = lastLocationPref.get()
     set(value) = lastLocationPref.set(value)
 
-  override fun lastLocationObs(): Observable<LatLng> = lastLocationPref.asObservable()
+  override fun lastLocationObs(): Observable<LatLng> = lastLocationPref.asObservable().filter { it != null }
 
 }

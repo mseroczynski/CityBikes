@@ -8,6 +8,9 @@ import rx.Observable
  */
 interface StationsScout {
 
+  /**
+   * Returns current stations with calculated distances (and updates them)
+   */
   fun currentSortedStationsObs(forceRefresh: Boolean): Observable<List<Pair<Station, Float>>>
 
 }

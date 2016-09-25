@@ -17,7 +17,7 @@ abstract class BaseFragment<V : HostedMvpView, P : MvpPresenter<V>> : MvpFragmen
 
   override var hostView: HostView? = null
 
-  protected abstract fun layoutRes(): Int
+  protected abstract val layoutRes: Int
 
   protected abstract fun injectDependencies()
 
@@ -31,10 +31,10 @@ abstract class BaseFragment<V : HostedMvpView, P : MvpPresenter<V>> : MvpFragmen
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(layoutRes(), container, false)
+    return inflater.inflate(layoutRes, container, false)
   }
 
-  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     injectDependencies()
     super.onViewCreated(view, savedInstanceState)
   }

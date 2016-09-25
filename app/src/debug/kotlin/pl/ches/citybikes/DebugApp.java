@@ -14,6 +14,8 @@ public class DebugApp extends App {
     super.init();
 
     DebugAppInitializer.initStetho(this);
+    DebugAppInitializer.initLeakCanary(this);
+    DebugAppInitializer.initTinyDancer(this);
   }
 
   @NonNull

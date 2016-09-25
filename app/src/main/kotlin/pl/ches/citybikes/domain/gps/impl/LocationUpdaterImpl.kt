@@ -29,14 +29,17 @@ constructor(private val schedulersProvider: SchedulersProvider,
 
   //region LocationUpdater
   override fun initLocation() {
+    v { "initLocation" }
     updateAndCacheSub(true)
   }
 
   override fun startUpdating() {
+    v { "startUpdating" }
     updatingSub = updateAndCacheSub(false)
   }
 
   override fun stopUpdating() {
+    v { "stopUpdating" }
     updatingSub?.let { it.unsubscribe() }
   }
   //endregion

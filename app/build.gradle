@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.getkeepsafe.dexcount' // Dexcount
+apply plugin: 'com.getkeepsafe.dexcount'
 
 apply from: rootProject.file("buildsystem/dependencies.gradle")
 apply from: rootProject.file("buildsystem/output.gradle")
@@ -26,6 +26,8 @@ android {
     testInstrumentationRunner cfg.getAt("testInstrumentationRunner")
 
     multiDexEnabled true
+
+    resValue "string", "google_maps_api_key", googleMapsApiKey
   }
 
   sourceSets {
@@ -129,6 +131,7 @@ dependencies {
   compile dpn.supportPreference
   compile dpn.supportMultidex
 
+  compile dpn.playServicesMaps
   compile dpn.playServicesLocation
 
   compile dpn.kotlinStdLib
@@ -193,5 +196,6 @@ dependencies {
   debugCompile debugDpn.stethoOkHttp3
   debugCompile debugDpn.leakCanary
   debugCompile debugDpn.okhttp3LogInterceptor
+  debugCompile debugDpn.tinyDancer
 
 }

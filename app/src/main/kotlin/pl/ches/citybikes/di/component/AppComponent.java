@@ -13,6 +13,7 @@ import pl.ches.citybikes.di.module.NextBikeApiModule;
 import pl.ches.citybikes.di.module.SchedulersModule;
 import pl.ches.citybikes.di.scope.AppScope;
 import pl.ches.citybikes.presentation.screen.main.MainComponent;
+import pl.ches.citybikes.presentation.screen.main.map.MapComponent;
 import pl.ches.citybikes.presentation.screen.main.stations.StationsComponent;
 
 /**
@@ -37,14 +38,11 @@ public interface AppComponent {
   // Application
   void inject(App target);
 
-  // Activity
-  // ...
-  // Fragment
-  // ...
-
   // Subcomponents
   MainComponent plusMain();
 
-  StationsComponent plustStations();
+  StationsComponent plusStations();
+
+  MapComponent plusMap();
 
 }

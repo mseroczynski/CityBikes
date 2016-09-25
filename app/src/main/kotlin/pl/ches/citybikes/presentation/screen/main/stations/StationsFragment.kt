@@ -21,12 +21,12 @@ import pl.ches.citybikes.presentation.common.widget.rv.ItemOffsetDecoration
  */
 class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Pair<Station, Float>>, StationsView, StationsPresenter>(), StationsView, StationsAdapter.Listener {
 
-  private val component = App.component().plustStations()
+  private val component = App.component().plusStations()
 
   private lateinit var adapter: StationsAdapter
 
   //region Setup
-  override val layoutRes = R.layout.fragment_stations
+  override val layoutRes by lazy { R.layout.fragment_stations }
 
   override fun injectDependencies() = component.inject(this)
 

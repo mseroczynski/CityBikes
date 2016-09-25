@@ -14,6 +14,7 @@ constructor(schedulersProvider: SchedulersProvider, private val locationUpdater:
 
   override fun attachView(view: MainView?) {
     super.attachView(view)
+
     locationUpdater.initLocation()
     locationUpdater.startUpdating()
   }

@@ -26,6 +26,7 @@ constructor(private val schedulersProvider: SchedulersProvider,
   }
 
   override fun lceDataLoaded(data: List<Pair<Station, Float>>) {
+    // TODO
     addSubscription(stationsScout.currentSortedStationsObs(false).compose(applyScheduler<List<Pair<Station, Float>>>())
         .subscribe({
           view.setData(it)

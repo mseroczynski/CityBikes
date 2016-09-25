@@ -11,7 +11,7 @@ interface CachePrefs {
 
   var lastAreasIds: Set<String>?
 
-  fun currentAreasIdsObs(): Observable<Set<String>>
+  fun lastAreasIdsObs(): Observable<Set<String>>
 
   var lastLocation: LatLng?
 

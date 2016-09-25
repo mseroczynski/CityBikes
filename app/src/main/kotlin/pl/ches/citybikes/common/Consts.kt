@@ -10,6 +10,7 @@ class Consts {
     const val INITIAL_RADIUS_IN_KM = 3.0
     const val LOCATION_UPDATE_INTERVAL_IN_MS = 1000L
     const val MAX_STATIONS_ON_LIST_COUNT = 50
+    const val DISTANCE_REFRESH_IN_S = 3L
   }
 
   object Prefs {
