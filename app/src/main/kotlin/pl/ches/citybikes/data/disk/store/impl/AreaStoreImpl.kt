@@ -1,7 +1,10 @@
 package pl.ches.citybikes.data.disk.store.impl
 
 import com.raizlabs.android.dbflow.config.FlowManager
-import com.raizlabs.android.dbflow.kotlinextensions.*
+import com.raizlabs.android.dbflow.kotlinextensions.eq
+import com.raizlabs.android.dbflow.kotlinextensions.from
+import com.raizlabs.android.dbflow.kotlinextensions.select
+import com.raizlabs.android.dbflow.kotlinextensions.where
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import com.raizlabs.android.dbflow.structure.database.transaction.FastStoreModelTransaction
 import pl.ches.citybikes.data.disk.Db
@@ -26,16 +29,16 @@ constructor() : AreaStore {
     }
   }
 
-  override fun get(key: SourceApi): List<Area>? {
-    val whereClause = when (key) {
-      SourceApi.ANY -> Area_Table.sourceApi isNot null
-      else -> Area_Table.sourceApi eq key
-    }
-    return (select
-        from Area::class
-        where whereClause
-        ).queryList()
-  }
+  override fun get(key: SourceApi): List<Area>? =
+      when (key) {
+        SourceApi.ANY -> (select
+            from Area::class
+            ).queryList()
+        else -> (select
+            from Area::class
+            where (Area_Table.sourceApi eq key)
+            ).queryList()
+      }
 
   override fun delete(value: List<Area>) = value.forEach { it.delete() }
 

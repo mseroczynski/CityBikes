@@ -22,7 +22,7 @@ constructor(private val cityBikesApiService: CityBikesApiService,
       true -> return netObs(area)
       false -> return Observable
           .concat(diskObs(area), netObs(area))
-          .first { it != null }
+          .first { it != null && it.isNotEmpty() }
     }
   }
 

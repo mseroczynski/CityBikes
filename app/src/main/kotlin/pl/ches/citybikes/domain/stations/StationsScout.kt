@@ -1,5 +1,6 @@
 package pl.ches.citybikes.domain.stations
 
+import pl.ches.citybikes.data.disk.entity.Area
 import pl.ches.citybikes.data.disk.entity.Station
 import rx.Observable
 
@@ -13,4 +14,12 @@ interface StationsScout {
    */
   fun currentSortedStationsObs(forceRefresh: Boolean): Observable<List<Pair<Station, Float>>>
 
-}
+  /**
+   * Returns current areas (once)
+   *
+   * @param forceUpdatedLocationAreas will force redefining closest areas in cache
+   * @param forceFetchingAreas will force fetching areas
+   */
+  fun currentAreasObs(forceUpdatedLocationAreas: Boolean, forceFetchingAreas: Boolean = false): Observable<List<Area>>
+
+  }

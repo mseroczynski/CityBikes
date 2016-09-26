@@ -47,37 +47,37 @@ class MapFragment : BaseFragment<MapView, MapPresenter>(), MapView {
 
   override fun onResume() {
     super.onResume()
-    map.onResume()
+    map?.onResume()
   }
 
   override fun onStart() {
     super.onStart()
-    map.onStart()
+    map?.onStart()
   }
 
   override fun onStop() {
     super.onStop()
-    map.onStop()
+    map?.onStop()
   }
 
   override fun onPause() {
     super.onPause()
-    map.onPause()
+    map?.onPause()
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    map.onDestroy()
+    map?.onDestroy()
   }
 
   override fun onLowMemory() {
     super.onLowMemory()
-    map.onLowMemory()
+    map?.onLowMemory()
   }
 
   override fun onSaveInstanceState(outState: Bundle?) {
     super.onSaveInstanceState(outState)
-    map.onSaveInstanceState(outState)
+    map?.onSaveInstanceState(outState)
   }
   //endregion
 
