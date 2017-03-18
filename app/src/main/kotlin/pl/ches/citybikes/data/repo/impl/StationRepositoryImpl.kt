@@ -8,6 +8,7 @@ import pl.ches.citybikes.data.disk.enums.SourceApi
 import pl.ches.citybikes.data.disk.store.StationStore
 import pl.ches.citybikes.data.repo.StationRepository
 import rx.Observable
+import v
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -33,12 +34,14 @@ constructor(private val cityBikesApiService: CityBikesApiService,
       else -> throw IllegalArgumentException("Source api must be determined!")
     }
         .doOnNext { stations ->
+          v { "storing ${stations.size} stations" }
           stations.forEach { it.associate(area) }
           stationStore.put(stations)
-          stations
         }
   }
 
-  private fun diskObs(area: Area): Observable<List<Station>> = stationStore.getObs(area)
+  private fun diskObs(area: Area): Observable<List<Station>> = stationStore.getObs(area).doOnNext {
+    v { "reading ${it.size} stations" }
+  }
 
 }

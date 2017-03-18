@@ -1,7 +1,7 @@
 buildscript {
 
   ext.ver = [
-      kotlin: '1.0.3',
+      kotlin: '1.1.0',
   ]
 
   ext.repos = {
@@ -14,7 +14,7 @@ buildscript {
 
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver.kotlin"
-    classpath "com.android.tools.build:gradle:2.1.2"
+    classpath 'com.android.tools.build:gradle:2.3.0'
     classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.6"
     classpath "com.google.gms:google-services:3.0.0"
   }

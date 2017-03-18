@@ -3,10 +3,8 @@ package pl.ches.citybikes.data.api.nb
 import pl.ches.citybikes.data.disk.entity.Area
 import pl.ches.citybikes.data.disk.entity.Station
 import pl.ches.citybikes.data.disk.enums.SourceApi
-import pl.ches.citybikes.di.scope.AppScope
 import rx.Observable
 import java.util.*
-import javax.inject.Inject
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -49,11 +47,22 @@ constructor(private val nextBikeApi: NextBikeApi) : NextBikeApiService {
             }
           }
         }
-        stations
+        stations.filter { !FAKE_STATIONS_IDS.contains(it.originalId) }
       }
 
   companion object {
-    val SOURCE_API = SourceApi.NEXT_BIKE
+    private val SOURCE_API = SourceApi.NEXT_BIKE
+
+    /**
+     * Some of stations on API aren't real, for now their id's are stored here
+     */
+    private val FAKE_STATIONS_IDS = arrayListOf(
+        "543238", // Trinity Park I
+        "543239", // Trinity Park I 1
+        "448566", // New City
+        "448565"  // Nestle House
+    )
+
   }
 
 }

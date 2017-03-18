@@ -10,11 +10,14 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
  */
 abstract class BaseSimpleActivity : AppCompatActivity() {
 
+  protected abstract val layoutRes: Int
+
   protected abstract fun injectDependencies()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     injectDependencies()
     super.onCreate(savedInstanceState)
+    setContentView(layoutRes)
   }
 
   override fun attachBaseContext(newBase: Context) {

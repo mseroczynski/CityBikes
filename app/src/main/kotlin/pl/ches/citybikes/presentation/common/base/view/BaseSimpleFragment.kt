@@ -15,8 +15,8 @@ abstract class BaseSimpleFragment : Fragment() {
 
   protected abstract fun injectDependencies()
 
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater!!.inflate(layoutRes, container, false)
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    return inflater.inflate(layoutRes, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

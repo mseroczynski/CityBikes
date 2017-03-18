@@ -14,7 +14,7 @@ import pl.ches.citybikes.interactor.GetStationsInteractor
 import pl.ches.citybikes.interactor.GetStationsParam
 import rx.Observable
 import rx.functions.Func2
-import java.util.concurrent.TimeUnit
+import v
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -26,6 +26,13 @@ constructor(private val getAreasInteractor: GetAreasInteractor,
             private val gpsCalculator: GpsCalculator) : StationsScout {
 
   //region StationsScout
+  // TODO Consider extracting BehaviorSubject-cache for saving sorted cache
+//  fun currentStationsObs2(forceRefresh: Boolean): Observable<List<Pair<Station, Float>>> {
+//    if(!forceRefresh && currentSortedStations != null)
+//      return Observable.just(currentSortedStations)
+//
+//  }
+
   override fun currentSortedStationsObs(forceRefresh: Boolean): Observable<List<Pair<Station, Float>>> {
     // Creating stations observable
     val stationsObs = currentAreasObs(forceRefresh)
@@ -34,7 +41,7 @@ constructor(private val getAreasInteractor: GetAreasInteractor,
           getStationsInteractor.asObservable(param)
         }
 
-    // Zips cached & new locations with stations in areas
+    // Zips current cached location with stations in areas
     val zipFunc = Func2<List<Station>, LatLng, List<Pair<Station, Float>>> { stations, lastLocation ->
       // Exclude duplicates (may occur while app uses independent providers)
       val stationsWithNoDuplicates = stations.distinctBy { it.originalName }
@@ -46,21 +53,27 @@ constructor(private val getAreasInteractor: GetAreasInteractor,
       stationsWithDistances.sortedBy { it.second }.take(Consts.Config.MAX_STATIONS_ON_LIST_COUNT)
     }
 
-    return Observable.combineLatest(stationsObs, updatingLocationObs(Consts.Config.DISTANCE_REFRESH_IN_S), zipFunc)
+    return Observable.combineLatest(stationsObs, cachePrefs.lastLocationObs(), zipFunc).doOnNext {
+      v { "currentSortedStationsObs -> ${it.size} stations" }
+    }
   }
 
-  override fun currentAreasObs(forceUpdatedLocationAreas: Boolean, forceFetchingAreas: Boolean): Observable<List<Area>> {
+  override fun currentAreasObs(forceUpdatedLocationAreas: Boolean,
+                               forceFetchingAreas: Boolean): Observable<List<Area>> {
     // If no refresh of location is forced, we may use cached in prefs areas if they exist
     when (forceUpdatedLocationAreas) {
-      true -> return initCurrentAreasObs(forceFetchingAreas)
-      false -> return Observable.concat(cachedCurrentAreasObs(), initCurrentAreasObs(forceFetchingAreas)).first()
+      true -> return initedCurrentAreasObs(forceFetchingAreas)
+      false -> return Observable
+          .concat(cachedCurrentAreasObs(), initedCurrentAreasObs(forceFetchingAreas))
+          .doOnNext {
+            v { "currentAreasObs -> ${it.size} areas" }
+          }
+          .first { it.isNotEmpty() }
     }
   }
   //endregion
 
-  private fun updatingLocationObs(timeInS: Long) = cachePrefs.lastLocationObs().debounce(timeInS, TimeUnit.SECONDS)
-
-  private fun initCurrentAreasObs(forceFetchingAreas: Boolean): Observable<List<Area>> {
+  private fun initedCurrentAreasObs(forceFetchingAreas: Boolean): Observable<List<Area>> {
     // Creating areas observable
     val param = GetAreasParam(SourceApi.ANY, forceFetchingAreas)
     val areasObs = getAreasInteractor.asObservable(param)
@@ -72,10 +85,17 @@ constructor(private val getAreasInteractor: GetAreasInteractor,
       areasInRadiusOrClosest
     }
 
-    return Observable.zip(areasObs, cachePrefs.lastLocationObs(), freshZipFunc)
+    return Observable.zip(areasObs, cachePrefs.lastLocationObs(), freshZipFunc).doOnNext {
+      v { "initedCurrentAreasObs -> ${it.size} areas" }
+    }
   }
 
   private fun cachedCurrentAreasObs(): Observable<List<Area>> {
+    // This condition prevents fetching areas on first call
+    if (cachePrefs.lastAreasIds == null) {
+      return Observable.empty()
+    }
+
     // Creating areas observable
     val param = GetAreasParam(SourceApi.ANY, false)
     val areasObs = getAreasInteractor.asObservable(param)
@@ -86,7 +106,9 @@ constructor(private val getAreasInteractor: GetAreasInteractor,
       currentCachedAreas
     }
 
-    return Observable.zip(areasObs, cachePrefs.lastAreasIdsObs().map { it.toList() }, cacheZipFunc)
+    return Observable.zip(areasObs, cachePrefs.lastAreasIdsObs().map { it.toList() }, cacheZipFunc).doOnNext {
+      v { "cachedCurrentAreasObs -> ${it.size} areas" }
+    }
   }
 
   private fun getAreasInRadiusOrClosest(areas: List<Area>, latLng: LatLng, radiusInKm: Double): List<Area> {

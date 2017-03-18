@@ -33,6 +33,7 @@ public class App extends MultiDexApplication {
     AppInitializer.initVectorDrawables();
     AppInitializer.initDBFlow(this);
     AppInitializer.initCalligraphy();
+    AppInitializer.initTimber();
 
     appComponent = initAppComponent();
     appComponent.inject(this);

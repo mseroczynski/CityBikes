@@ -23,21 +23,18 @@ constructor(private val schedulersProvider: SchedulersProvider,
 
   //region Events
   fun mapReady() {
-    //
+    // Present last location
     addSubscription(cachePrefs.lastLocationObs().compose(applyScheduler<LatLng>())
-        .subscribe { latLng ->
-          view.updateUserLocation(latLng)
-        })
+        .subscribe { latLng -> view.updateUserMarker(latLng) }
+    )
 
-    // (Re)Load stations once for every time areas are changed
-//    val stationsObs = stationsScout.currentSortedStationsObs(false).first()
-//    addSubscription(cachePrefs.lastAreasIdsObs().flatMap { stationsObs }.compose(applyScheduler<List<Pair<Station, Float>>>())
-
-//    addSubscription(stationsScout.currentSortedStationsObs(false).first().compose(applyScheduler<List<Pair<Station, Float>>>())
-    addSubscription(stationsScout.currentSortedStationsObs(false).compose(applyScheduler<List<Pair<Station, Float>>>())
-        .subscribe { stations ->
-          view.updateStations(stations.map { it.first })
-        }
+    // Load current stations once
+    addSubscription(
+        stationsScout.currentSortedStationsObs(false).first().compose(applyScheduler<List<Pair<Station, Float>>>())
+            .subscribe { stations ->
+              view.clearStationsMarkers()
+              view.showStationMarkers(stations.map { it.first })
+            }
     )
   }
   //endregion

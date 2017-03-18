@@ -2,13 +2,31 @@
 <resources>
   <color name="gray_blue">#2A3137</color>
   <color name="blue">#0c84d6</color>
+  <color name="red">#f25f5f</color>
+  <color name="white">#FFFFFF</color>
+  <color name="black">#000000</color>
+  <color name="black_a12">#1F000000</color>
   <!--Material-->
   <color name="colorPrimary">@color/blue</color>
   <color name="colorPrimaryDark">#2A3137</color>
   <color name="colorAccent">#0c84d6</color>
+  <!--Text-->
+  <color name="text_black">#000000</color>
+  <color name="text_white">#FFFFFF</color>
+  <color name="text_white_a38">#61FFFFFF</color>
+  <color name="text_white_a54">#8AFFFFFF</color>
+  <color name="text_white_a87">#DEFFFFFF</color>
+  <color name="text_black_a38">#61000000</color>
+  <color name="text_black_a54">#8A000000</color>
+  <color name="text_black_a87">#DE000000</color>
   <!--Widgets-->
   <!--SwipeRefresh-->
   <color name="refresh_progress_1">@color/colorAccent</color>
   <color name="refresh_progress_2">@color/colorPrimary</color>
   <color name="refresh_progress_3">@color/colorPrimaryDark</color>
+  <!--App-->
+  <color name="north">@color/red</color>
+  <color name="bikes_0">#8ec6ec</color>
+  <color name="bikes_1_to_4">#0c84d6</color>
+  <color name="bikes_5_or_more">#0a619e</color>
 </resources>

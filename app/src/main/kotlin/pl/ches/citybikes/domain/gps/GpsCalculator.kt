@@ -11,4 +11,6 @@ interface GpsCalculator {
 
   fun getDistanceInMeters(from: LatLng, to: LatLng): Float
 
+  fun getAngle(from: LatLng, to: LatLng): Double
+
 }

@@ -30,8 +30,8 @@ abstract class BaseViewStateFragment<V : HostedMvpView, P : MvpPresenter<V>> : M
     }
   }
 
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater!!.inflate(layoutRes, container, false)
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    return inflater.inflate(layoutRes, container, false)
   }
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

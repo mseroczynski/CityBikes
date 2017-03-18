@@ -8,13 +8,13 @@ apply from: rootProject.file("buildsystem/output.gradle")
 
 // Global configuration
 def final cfg = extensions.getByName("ext")
-// Overrides minSdk to >21
-def final minSdk = project.hasProperty("fastLocalBuild") ? 21 : cfg.getAt("androidMinSdkVersion")
+// Overrides minSdk to 21+
+def final minSdk = project.hasProperty("fastLocalBuild") ? 21 : cfg["androidMinSdkVersion"]
 
 android {
 
-  compileSdkVersion cfg.getAt("androidCompileSdkVersion")
-  buildToolsVersion cfg.getAt("androidBuildToolsVersion")
+  compileSdkVersion cfg["androidCompileSdkVersion"]
+  buildToolsVersion cfg["androidBuildToolsVersion"]
 
   defaultConfig {
     minSdkVersion minSdk
@@ -51,8 +51,6 @@ android {
   }
 
   dexOptions {
-    // To prevent http://stackoverflow.com/questions/25013638/android-studio-google-jar-causing-gc-overhead-limit-exceeded-error
-    incremental true
     javaMaxHeapSize "4g"
   }
 
@@ -177,11 +175,12 @@ dependencies {
   compile dpn.mosby
   compile dpn.mosbyViewstate
   compile dpn.timber
+  compile dpn.iceKick
 
   compile dpn.materialTypeface
   compile dpn.materialishProgress
   compile dpn.calligraphy
-  // compile dpn.spaceNavigationView
+  compile 'com.github.google:cameraview:c4af56f' // TODO
 
   // Unit tests
   testCompile testDpn.jUnit
@@ -198,4 +197,9 @@ dependencies {
   debugCompile debugDpn.okhttp3LogInterceptor
   debugCompile debugDpn.tinyDancer
 
+}
+
+configurations.all {
+  // Enforcing versions
+  resolutionStrategy.force cfg.dependencies.rxJava
 }

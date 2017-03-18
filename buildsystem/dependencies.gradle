@@ -4,10 +4,10 @@ allprojects {
 
 ext {
   //Android
-  androidBuildToolsVersion = '24.0.2'
+  androidBuildToolsVersion = '25.0.2'
   androidMinSdkVersion = 16
-  androidTargetSdkVersion = 24
-  androidCompileSdkVersion = 24
+  androidTargetSdkVersion = 25
+  androidCompileSdkVersion = 25
 
   androidApplicationId = 'pl.ches.citybikes'
   androidVersionCode = 1
@@ -15,7 +15,7 @@ ext {
   testInstrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
 
   //Libs
-  supportLibsVersion = '24.1.1'
+  supportLibsVersion = '25.0.1'
   multidexVersion = '1.0.1'
   playServicesVersion = '9.6.0'
   daggerVersion = '2.6.1'
@@ -35,8 +35,9 @@ ext {
   rxJavaProguardRulesVersion = '1.1.9.0'
   reactiveLocationVersion = '0.9'
   retrofitVersion = '2.1.0'
-  timberVersion = '4.1.1'
   mosbyVersion = '2.0.1'
+  timberVersion = '4.1.1'
+  iceKickVersion = '0.1'
 
   // Test libs
   jUnitVersion = '4.12'
@@ -105,11 +106,11 @@ ext {
       mosby                   : "com.hannesdorfmann.mosby:mvp:${mosbyVersion}",
       mosbyViewstate          : "com.hannesdorfmann.mosby:viewstate:${mosbyVersion}",
       timber                  : "com.jakewharton.timber:timber:${timberVersion}",
+      iceKick                 : "com.github.tinsukE:icekick:${iceKickVersion}",
 
       materialTypeface        : "com.mikepenz:google-material-typeface:2.2.0.1@aar",
       materialishProgress     : "com.pnikosis:materialish-progress:1.7",
       calligraphy             : "uk.co.chrisjenx:calligraphy:2.1.0",
-      spaceNavigationView     : "com.github.armcha:SpaceNavigationView:1.3.2"
 
   ]
 

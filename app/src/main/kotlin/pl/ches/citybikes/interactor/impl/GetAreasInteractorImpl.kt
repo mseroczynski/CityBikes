@@ -7,6 +7,7 @@ import pl.ches.citybikes.domain.common.SchedulersProvider
 import pl.ches.citybikes.interactor.GetAreasInteractor
 import pl.ches.citybikes.interactor.GetAreasParam
 import rx.Observable
+import v
 import javax.inject.Inject
 
 /**

@@ -40,6 +40,8 @@ class MapFragment : BaseFragment<MapView, MapPresenter>(), MapView {
     map.onCreate(savedInstanceState)
     map.getMapAsync { googleMap ->
       this.googleMap = googleMap
+      val style = MapStyleOptions.loadRawResourceStyle(activity, R.raw.maps_style)
+      googleMap.setMapStyle(style)
       initIconsCache()
       presenter.mapReady()
     }
@@ -82,16 +84,20 @@ class MapFragment : BaseFragment<MapView, MapPresenter>(), MapView {
   //endregion
 
   //region View
-  override fun updateUserLocation(latLng: LatLng) =
+  override fun updateUserMarker(latLng: LatLng) =
       when (userMarker) {
         null -> initUserMarker(latLng)
-        else -> updateUserMarker(latLng)
+        else -> animateUserMarker(latLng)
       }
 
-  override fun updateStations(stations: List<Station>) = stations.forEach {
+  override fun showStationMarkers(stations: List<Station>) = stations.forEach {
     initStationMarker(it)
   }
 
+  override fun clearStationsMarkers() {
+    googleMap.clear()
+    userMarker?.let { initUserMarker(LatLng(it.position.latitude, it.position.longitude)) }
+  }
   //endregion
 
   private fun initUserMarker(latLng: LatLng) {
@@ -99,7 +105,7 @@ class MapFragment : BaseFragment<MapView, MapPresenter>(), MapView {
     MapsUtils.setCamera(googleMap, latLng)
   }
 
-  private fun updateUserMarker(latLng: LatLng) = MapsUtils.animateMarker(googleMap, userMarker!!, latLng)
+  private fun animateUserMarker(latLng: LatLng) = MapsUtils.animateMarker(googleMap, userMarker!!, latLng)
 
   private fun initStationMarker(station: Station): Marker {
     val latLng = LatLng(station.latitude, station.longitude)
@@ -126,12 +132,12 @@ class MapFragment : BaseFragment<MapView, MapPresenter>(), MapView {
 
   private fun initIconsCache() {
     iconsCache = HashMap()
-    iconsCache.put(0, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_empty))
+    iconsCache.put(0, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_0))
     iconsCache.put(1, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_1))
     iconsCache.put(2, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_2))
     iconsCache.put(3, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_3))
     iconsCache.put(4, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_4))
-    iconsCache.put(5, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_full))
+    iconsCache.put(5, BitmapDescriptorFactory.fromResource(R.drawable.ic_bikes_5_or_more))
     iconsCache.put(KEY_USER_ICON, BitmapDescriptorFactory.fromResource(R.drawable.ic_you_on_map))
   }
 

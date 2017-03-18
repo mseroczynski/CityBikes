@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_a12"
+    android:fitsSystemWindows="true">
+
+  <pl.ches.citybikes.presentation.screen.main.compass.widget.StationCompass3dView
+      android:id="@+id/compass3d"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"/>
+
+  <pl.ches.citybikes.presentation.screen.main.compass.widget.StationCompass2dView
+      android:id="@+id/compass2d"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone"/>
+
+</android.support.design.widget.CoordinatorLayout>
+
+
+  <!--<ImageView-->
+      <!--android:id="@+id/compass"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="match_parent"-->
+      <!--android:layout_centerInParent="true"-->
+      <!--android:src="@drawable/ic_bikes_1"/>-->
+
+  <!--<LinearLayout-->
+      <!--android:layout_width="wrap_content"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_centerInParent="true"-->
+      <!--android:layout_margin="@dimen/space_large"-->
+      <!--android:orientation="vertical">-->
+
+    <!--<pl.ches.citybikes.presentation.common.widget.SquaredImageView-->
+        <!--android:id="@+id/compass"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/ic_bikes_1"/>-->
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/ac_stationName"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="@dimen/space_large"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:textColor="@color/text_white87"-->
+        <!--style="@style/TextAppearance.AppCompat.Headline"/>-->
+  <!--</LinearLayout>-->

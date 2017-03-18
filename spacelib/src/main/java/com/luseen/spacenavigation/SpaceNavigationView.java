@@ -66,6 +66,8 @@ public class SpaceNavigationView extends RelativeLayout {
 
     private static final int MIN_SPACE_ITEM_SIZE = 2;
 
+    private static final int CENTRE_INDEX = 909;
+
     private List<SpaceItem> spaceItems = new ArrayList<>();
 
     private List<View> spaceItemList = new ArrayList<>();
@@ -236,15 +238,16 @@ public class SpaceNavigationView extends RelativeLayout {
         /**
          * Trow exceptions if items size is greater than 4 or lesser than 2
          */
-        if (spaceItems.size() < MIN_SPACE_ITEM_SIZE && !isInEditMode()) {
-            throw new NullPointerException("Your space item count must be greater than 1 ," +
-                    " your current items count isa : " + spaceItems.size());
-        }
-
-        if (spaceItems.size() > MAX_SPACE_ITEM_SIZE && !isInEditMode()) {
-            throw new IndexOutOfBoundsException("Your items count maximum can be 4," +
-                    " your current items count is : " + spaceItems.size());
-        }
+        // FIXME Locally commented - caused exception when centre button clicked
+        //if (spaceItems.size() < MIN_SPACE_ITEM_SIZE && !isInEditMode()) {
+        //    throw new NullPointerException("Your space item count must be greater than 1 ," +
+        //            " your current items count isa : " + spaceItems.size());
+        //}
+        //
+        //if (spaceItems.size() > MAX_SPACE_ITEM_SIZE && !isInEditMode()) {
+        //    throw new IndexOutOfBoundsException("Your items count maximum can be 4," +
+        //            " your current items count is : " + spaceItems.size());
+        //}
 
         /**
          * Get left or right content width
@@ -295,8 +298,10 @@ public class SpaceNavigationView extends RelativeLayout {
         fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (spaceOnClickListener != null)
+                if (spaceOnClickListener != null) {
+                    updateSpaceItems(CENTRE_INDEX);
                     spaceOnClickListener.onCentreButtonClick();
+                }
             }
         });
         fab.setOnLongClickListener(new OnLongClickListener() {
@@ -523,7 +528,7 @@ public class SpaceNavigationView extends RelativeLayout {
         /**
          * return if item already selected
          */
-        if (currentSelectedItem == selectedIndex) {
+        if (currentSelectedItem == selectedIndex && selectedIndex != CENTRE_INDEX) {
             if (spaceOnClickListener != null)
                 spaceOnClickListener.onItemReselected(selectedIndex, spaceItems.get(selectedIndex).getItemName());
 
@@ -554,7 +559,7 @@ public class SpaceNavigationView extends RelativeLayout {
          *
          * @param listener a listener for monitoring changes in item selection
          */
-        if (spaceOnClickListener != null)
+        if (spaceOnClickListener != null && selectedIndex != CENTRE_INDEX)
             spaceOnClickListener.onItemClick(selectedIndex, spaceItems.get(selectedIndex).getItemName());
 
         /**
@@ -1005,5 +1010,7 @@ public class SpaceNavigationView extends RelativeLayout {
         centreButtonIconColor = color;
     }
 
+    public void clearTints() {
 
+    }
 }

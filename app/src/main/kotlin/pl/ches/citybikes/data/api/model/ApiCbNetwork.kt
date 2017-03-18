@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName
  */
 class ApiCbNetwork(
 
+    @SerializedName("company")
+    var companies: List<String>?,
     @SerializedName("href")
     var href: String,
     @SerializedName("id")

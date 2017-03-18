@@ -4,6 +4,7 @@ import pl.ches.citybikes.data.disk.entity.Area
 import pl.ches.citybikes.data.disk.entity.Station
 import pl.ches.citybikes.data.disk.enums.SourceApi
 import rx.Observable
+import java.util.*
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
@@ -13,15 +14,19 @@ constructor(private val cityBikesApi: CityBikesApi) : CityBikesApiService {
 
   override fun getAreas(): Observable<List<Area>> =
       cityBikesApi.getNetworks().map {
-        it.networks.map {
-          Area(
-              id = "${SOURCE_API.toPrefix}${it.id}",
-              sourceApi = SOURCE_API,
-              originalId = it.id,
-              originalName = it.name,
-              latitude = it.location.latitude,
-              longitude = it.location.longitude)
-        }
+        val areas = ArrayList<Area>()
+        it.networks
+            .filter { !(it.companies?.contains(UNUSED_COMPANY) ?: false) }
+            .forEach {
+              areas.add(Area(
+                  id = "${SOURCE_API.toPrefix}${it.id}",
+                  sourceApi = SOURCE_API,
+                  originalId = it.id,
+                  originalName = it.name,
+                  latitude = it.location.latitude,
+                  longitude = it.location.longitude))
+            }
+        areas
       }
 
   override fun getStations(networkId: String): Observable<List<Station>> =
@@ -40,7 +45,13 @@ constructor(private val cityBikesApi: CityBikesApi) : CityBikesApiService {
       }
 
   companion object {
-    val SOURCE_API = SourceApi.CITY_BIKES
+    private val SOURCE_API = SourceApi.CITY_BIKES
+
+    /**
+     * Some of the areas on API aren't used as better data source is used for them
+     */
+    private val UNUSED_COMPANY = "Nextbike GmbH"
+
   }
 
 }

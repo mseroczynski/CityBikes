@@ -16,10 +16,6 @@ constructor(private val schedulersProvider: SchedulersProvider,
             private val stationsScout: StationsScout) : MvpLceRxPresenter<StationsView, List<Pair<Station, Float>>>(
     schedulersProvider) {
 
-  override fun attachView(view: StationsView) {
-    super.attachView(view)
-  }
-
   fun loadData(pullToRefresh: Boolean) {
     val currentStationsObs = stationsScout.currentSortedStationsObs(pullToRefresh).first()
     subscribeLce(currentStationsObs, pullToRefresh)
@@ -30,15 +26,13 @@ constructor(private val schedulersProvider: SchedulersProvider,
         .subscribe({
           view.setData(it)
         }, {
-          v { "" }
+          v { "" } // TODO
         }, {
           v { "" }
         }))
   }
 
   //region Events
-  fun stationClicked(position: Int) {
-  }
   //endregion
 
 }

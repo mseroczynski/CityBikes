@@ -26,17 +26,11 @@
           android:id="@+id/recyclerView"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          android:paddingTop="@dimen/space_medium"
+          android:paddingBottom="52dp"
           android:clipToPadding="false"/>
 
-      <!--<pl.ches.citybikes.presentation.common.widget.FixedNestedScrollView-->
-          <!--android:id="@+id/nestedScrollView"-->
-          <!--android:layout_width="match_parent"-->
-          <!--android:layout_height="match_parent">-->
-
-      <!--</pl.ches.citybikes.presentation.common.widget.FixedNestedScrollView>-->
     </android.support.v4.widget.SwipeRefreshLayout>
 
   </FrameLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package pl.ches.citybikes.presentation.screen.main.stations
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -14,16 +15,17 @@ import pl.ches.citybikes.App
 import pl.ches.citybikes.R
 import pl.ches.citybikes.data.disk.entity.Station
 import pl.ches.citybikes.presentation.common.base.view.BaseLceViewStateFragmentSrl
-import pl.ches.citybikes.presentation.common.widget.rv.ItemOffsetDecoration
+import pl.ches.citybikes.presentation.common.widget.DividerItemDecoration
 
 /**
  * @author Michał Seroczyński <michal.seroczynski@gmail.com>
  */
-class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Pair<Station, Float>>, StationsView, StationsPresenter>(), StationsView, StationsAdapter.Listener {
+class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Pair<Station, Float>>, StationsView, StationsPresenter>(), StationsView, StationAdapter.Listener {
 
   private val component = App.component().plusStations()
 
-  private lateinit var adapter: StationsAdapter
+  private lateinit var adapter: StationAdapter
+  private lateinit var stationChooseListener: StationChooseListener
 
   //region Setup
   override val layoutRes by lazy { R.layout.fragment_stations }
@@ -31,6 +33,15 @@ class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Pa
   override fun injectDependencies() = component.inject(this)
 
   override fun createPresenter(): StationsPresenter = component.presenter()
+
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    try {
+      stationChooseListener = context as StationChooseListener
+    } catch (e: ClassCastException) {
+      throw ClassCastException(activity.toString() + " must implement ${StationChooseListener::class.java.simpleName}")
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -41,11 +52,12 @@ class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Pa
     super.onViewCreated(view, savedInstanceState)
     appBarLay.offsetChanges().subscribe { contentView.isEnabled = it == 0 }
     contentView.refreshes().subscribe { loadData(true) }
-    adapter = StationsAdapter(activity, this)
+    adapter = StationAdapter(activity, this)
     recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = adapter
     recyclerView.isNestedScrollingEnabled = false
-    recyclerView.addItemDecoration(ItemOffsetDecoration(context, R.dimen.space_small))
+    val dividerItemDecoration = DividerItemDecoration(activity, R.drawable.bg_line_divider, false, false)
+    recyclerView.addItemDecoration(dividerItemDecoration)
   }
 
   override fun loadData(pullToRefresh: Boolean) = presenter.loadData(pullToRefresh)
@@ -54,11 +66,14 @@ class StationsFragment : BaseLceViewStateFragmentSrl<SwipeRefreshLayout, List<Pa
 
   override fun getData(): List<Pair<Station, Float>> = adapter.getItems()
 
-  override fun setData(data: List<Pair<Station, Float>>) = adapter.setItems(data)
+  override fun setData(data: List<Pair<Station, Float>>) {
+    adapter.swapItems(data)
+//    onStationClicked(data.first().first)
+  }
   //endregion
 
   //region Events
-  override fun onStationClicked(position: Int) = presenter.stationClicked(position)
+  override fun onStationClicked(station: Station) = stationChooseListener.stationChosen(station)
   //endregion
 
   companion object {

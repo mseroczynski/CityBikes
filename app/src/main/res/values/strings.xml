@@ -3,4 +3,7 @@
   <string name="toast_success">Success</string>
   <string name="toast_gps_permission_missing">GPS permission missing!</string>
   <string name="toast_error">Error</string>
+  <!--Labels-->
+  <string name="stations">Stations</string>
+  <string name="map">Map</string>
 </resources>

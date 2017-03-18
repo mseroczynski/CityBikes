@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.hardware.SensorManager
 import android.media.AudioManager
 import android.net.ConnectivityManager
 import android.preference.PreferenceManager
@@ -79,6 +80,12 @@ class AndroidModule(application: Application) {
   @Provides
   internal fun provideResources(context: Context): Resources {
     return context.resources
+  }
+
+  @AppScope
+  @Provides
+  internal fun provideSensorManger(context: Context) : SensorManager {
+    return context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
   }
 
 }

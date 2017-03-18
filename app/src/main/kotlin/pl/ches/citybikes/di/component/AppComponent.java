@@ -12,6 +12,7 @@ import pl.ches.citybikes.di.module.InteractorModule;
 import pl.ches.citybikes.di.module.NextBikeApiModule;
 import pl.ches.citybikes.di.module.SchedulersModule;
 import pl.ches.citybikes.di.scope.AppScope;
+import pl.ches.citybikes.presentation.screen.main.compass.CompassComponent;
 import pl.ches.citybikes.presentation.screen.main.MainComponent;
 import pl.ches.citybikes.presentation.screen.main.map.MapComponent;
 import pl.ches.citybikes.presentation.screen.main.stations.StationsComponent;
@@ -40,6 +41,8 @@ public interface AppComponent {
 
   // Subcomponents
   MainComponent plusMain();
+
+  CompassComponent plusCompass();
 
   StationsComponent plusStations();
 

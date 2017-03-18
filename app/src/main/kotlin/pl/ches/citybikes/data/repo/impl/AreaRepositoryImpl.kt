@@ -8,6 +8,7 @@ import pl.ches.citybikes.data.disk.store.AreaStore
 import pl.ches.citybikes.data.repo.AreaRepository
 import rx.Observable
 import rx.functions.Func2
+import v
 import java.util.*
 
 /**
@@ -39,11 +40,13 @@ constructor(private val cityBikesApiService: CityBikesApiService,
             }
           })
     }.doOnNext { areas ->
+      v { "storing ${areas.size} areas" }
       areaStore.put(areas)
-      areas
     }
   }
 
-  private fun diskObs(sourceApi: SourceApi): Observable<List<Area>> = areaStore.getObs(sourceApi)
+  private fun diskObs(sourceApi: SourceApi): Observable<List<Area>> = areaStore.getObs(sourceApi).doOnNext {
+    v { "reading ${it.size} areas" }
+  }
 
 }

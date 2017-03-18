@@ -1,6 +1,8 @@
 package pl.ches.citybikes.di.module
 
 import android.content.Context
+import android.hardware.SensorManager
+import android.view.WindowManager
 import com.f2prateek.rx.preferences.RxSharedPreferences
 import dagger.Module
 import dagger.Provides
@@ -20,10 +22,14 @@ import pl.ches.citybikes.data.repo.impl.AreaRepositoryImpl
 import pl.ches.citybikes.data.repo.impl.StationRepositoryImpl
 import pl.ches.citybikes.di.scope.AppScope
 import pl.ches.citybikes.domain.common.SchedulersProvider
+import pl.ches.citybikes.domain.orientation.OrientationManager
+import pl.ches.citybikes.domain.orientation.impl.OrientationManagerImpl
 import pl.ches.citybikes.domain.gps.GpsCalculator
 import pl.ches.citybikes.domain.gps.LocationUpdater
 import pl.ches.citybikes.domain.gps.impl.GpsCalculatorImpl
 import pl.ches.citybikes.domain.gps.impl.LocationUpdaterImpl
+import pl.ches.citybikes.domain.orientation.internal.OrientationCalculator
+import pl.ches.citybikes.domain.orientation.internal.OrientationCalculatorImpl
 import pl.ches.citybikes.domain.stations.StationsScout
 import pl.ches.citybikes.domain.stations.impl.StationsScoutImpl
 import pl.ches.citybikes.interactor.GetAreasInteractor
@@ -94,10 +100,22 @@ class CommonModule {
 
   @AppScope
   @Provides
+  internal fun provideOrientationCalculator() : OrientationCalculator = OrientationCalculatorImpl()
+
+  @AppScope
+  @Provides
   internal fun provideLocationUpdater(schedulersProvider: SchedulersProvider,
                                       reactiveLocationProvider: ReactiveLocationProvider,
                                       cachePrefs: CachePrefs) : LocationUpdater {
     return LocationUpdaterImpl(schedulersProvider, reactiveLocationProvider, cachePrefs)
+  }
+
+  @AppScope
+  @Provides
+  internal fun provideCompassManager(sensorManager: SensorManager,
+                                     windowManager: WindowManager,
+                                     orientationCalculator: OrientationCalculator) : OrientationManager {
+    return OrientationManagerImpl(sensorManager, windowManager, orientationCalculator)
   }
 
   @AppScope

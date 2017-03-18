@@ -31,8 +31,8 @@ abstract class BaseLceFragment<CV : View, M, V : HostedMvpLceView<M>, P : MvpPre
     }
   }
 
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater!!.inflate(layoutRes, container, false)
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    return inflater.inflate(layoutRes, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

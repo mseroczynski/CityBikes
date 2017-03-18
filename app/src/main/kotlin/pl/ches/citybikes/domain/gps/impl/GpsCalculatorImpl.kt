@@ -22,7 +22,21 @@ constructor() : GpsCalculator {
     Location.distanceBetween(from.latitude, from.longitude, to.latitude, to.longitude, dist)
     return dist[0]
   }
+
+  override fun getAngle(from: LatLng, to: LatLng): Double {
+    val lat1 = from.latitude
+    val lng1 = from.longitude
+    val lat2 = to.latitude
+    val lng2 = to.longitude
+    val dLng = lng1 - lng2
+
+    val directionRad = getDirectionRad(Math.toRadians(lat1), Math.toRadians(lat2), Math.toRadians(dLng))
+    return Math.toDegrees(directionRad)
+  }
   //endregion
+
+  private fun getDirectionRad(lat1: Double, lat2: Double, dLng: Double) = Math.atan2(Math.sin(dLng),
+      (Math.cos(lat1) * Math.tan(lat2)) - (Math.sin(lat1) * Math.cos(dLng)))
 
   /**
    * Simple helper extension to keep GeoLocation free from framework dependencies

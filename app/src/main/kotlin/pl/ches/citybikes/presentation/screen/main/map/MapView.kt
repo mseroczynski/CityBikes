@@ -9,8 +9,10 @@ import pl.ches.citybikes.presentation.common.base.host.HostedMvpView
  */
 interface MapView : HostedMvpView {
 
-  fun updateUserLocation(latLng: LatLng)
+  fun updateUserMarker(latLng: LatLng)
 
-  fun updateStations(stations: List<Station>)
+  fun showStationMarkers(stations: List<Station>)
+
+  fun clearStationsMarkers()
 
 }

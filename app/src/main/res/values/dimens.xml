@@ -6,5 +6,10 @@
   <dimen name="space_medium">8dp</dimen>
   <dimen name="space_large">16dp</dimen>
   <!--Text-->
-  <item name="body_1_spacing" format="float" type="dimen">1.22448979592</item>
+  <dimen name="text_size_xsmall">11sp</dimen>
+  <dimen name="text_size_small">12sp</dimen>
+  <dimen name="text_size_medium">14sp</dimen>
+  <dimen name="text_size_large">18sp</dimen>
+  <dimen name="text_size_xlarge">20sp</dimen>
+  <item format="float" name="body_1_spacing" type="dimen">1.22448979592</item>
 </resources>
