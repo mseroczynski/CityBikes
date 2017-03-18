@@ -1,39 +1,32 @@
 apply plugin: 'com.android.library'
 
-apply from: rootProject.file("buildsystem/dependencies.gradle")
-
-// Global configuration
-def final cfg = extensions.getByName("ext")
-// Overrides minSdk to 21+
-def final minSdk = project.hasProperty("fastLocalBuild") ? 21 : cfg["androidMinSdkVersion"]
-
 android {
 
-    compileSdkVersion cfg["androidCompileSdkVersion"]
-    buildToolsVersion cfg["androidBuildToolsVersion"]
+  compileSdkVersion rootProject.ext.androidCompileSdkVersion
+  buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
+  defaultConfig {
+    minSdkVersion rootProject.ext.androidMinSdkVersion
+    targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-    defaultConfig {
-        minSdkVersion minSdk
-        targetSdkVersion cfg["androidTargetSdkVersion"]
-        versionCode 1
-        versionName "1.0"
-        vectorDrawables.useSupportLibrary = true
+    versionCode 1
+    versionName "1.0"
+    vectorDrawables.useSupportLibrary = true
+  }
+
+  buildTypes {
+    release {
+      tasks.withType(Javadoc).all { enabled = false }
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-
-    buildTypes {
-        release {
-            tasks.withType(Javadoc).all { enabled = false }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+  }
 }
 
 dependencies {
-    def dpn = cfg.dependencies
+  def dpn = rootProject.ext.dependencies
 
-    compile dpn.supportAppCompat
-    compile dpn.supportAnnotations
-    compile dpn.supportDesign
+  compile dpn.supportAppCompat
+  compile dpn.supportAnnotations
+  compile dpn.supportDesign
 }

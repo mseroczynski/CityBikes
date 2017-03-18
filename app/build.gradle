@@ -3,27 +3,21 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.getkeepsafe.dexcount'
 
-apply from: rootProject.file("buildsystem/dependencies.gradle")
 apply from: rootProject.file("buildsystem/output.gradle")
-
-// Global configuration
-def final cfg = extensions.getByName("ext")
-// Overrides minSdk to 21+
-def final minSdk = project.hasProperty("fastLocalBuild") ? 21 : cfg["androidMinSdkVersion"]
 
 android {
 
-  compileSdkVersion cfg["androidCompileSdkVersion"]
-  buildToolsVersion cfg["androidBuildToolsVersion"]
+  compileSdkVersion rootProject.ext.androidCompileSdkVersion
+  buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
   defaultConfig {
-    minSdkVersion minSdk
-    targetSdkVersion cfg.getAt("androidTargetSdkVersion")
+    minSdkVersion rootProject.ext.androidMinSdkVersion
+    targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-    applicationId cfg.getAt("androidApplicationId")
-    versionCode cfg.getAt("androidVersionCode")
-    versionName cfg.getAt("androidVersionName")
-    testInstrumentationRunner cfg.getAt("testInstrumentationRunner")
+    applicationId rootProject.ext.androidApplicationId
+    versionCode rootProject.ext.androidVersionCode
+    versionName rootProject.ext.androidVersionName
+    testInstrumentationRunner rootProject.ext.testInstrumentationRunner
 
     multiDexEnabled true
 
@@ -99,15 +93,6 @@ android {
   }
 }
 
-// Kotlin
-buildscript {
-  repositories repos
-
-  dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver.kotlin"
-  }
-}
-
 // DBFlow
 kapt {
   generateStubs = true
@@ -116,9 +101,9 @@ kapt {
 dependencies {
   compile project(':spacelib')
 
-  def dpn = cfg.dependencies
-  def testDpn = cfg.testDependencies
-  def debugDpn = cfg.debugDependencies
+  def dpn = rootProject.ext.dependencies
+  def testDpn = rootProject.ext.testDependencies
+  def debugDpn = rootProject.ext.debugDependencies
 
   compile dpn.supportAppCompat
   compile dpn.supportAnnotations
@@ -201,5 +186,5 @@ dependencies {
 
 configurations.all {
   // Enforcing versions
-  resolutionStrategy.force cfg.dependencies.rxJava
+  resolutionStrategy.force rootProject.ext.dependencies.rxJava
 }
